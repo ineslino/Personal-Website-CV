@@ -206,7 +206,19 @@ langBtn.addEventListener('click', () => {
 
 function updateLanguage() {
     // Update all elements with data attributes
-    document.querySelectorAll('[data-pt][data-en]').forEach(element => {
+    const allElements = document.querySelectorAll('[data-pt][data-en]');
+    allElements.forEach(element => {
+        element.textContent = element.dataset[currentLanguage];
+    });
+    
+    // Specifically update skill chips and skill items
+    const chips = document.querySelectorAll('.chip[data-pt][data-en]');
+    chips.forEach(element => {
+        element.textContent = element.dataset[currentLanguage];
+    });
+    
+    const skillItems = document.querySelectorAll('.skill-item span[data-pt][data-en]');
+    skillItems.forEach(element => {
         element.textContent = element.dataset[currentLanguage];
     });
     // Normalize certification date prefixes across languages
@@ -3091,6 +3103,7 @@ function initializeAll() {
     if (langBtnEl) {
         langBtnEl.addEventListener('click', () => {
             setTimeout(markTruncatedDescriptions, 50);
+            updateLanguage(); // Add this to ensure language update
         });
     }
     
@@ -3516,6 +3529,17 @@ function populateRecruiterSummary() {
         const skillTag = document.createElement('span');
         skillTag.className = 'recruiter-skill';
         skillTag.textContent = skill;
+        
+        // Add translation attributes if the original skill has them
+        const originalSkill = document.querySelector(`.chip[data-en="${skill}"], .chip[data-pt="${skill}"]`);
+        if (originalSkill && originalSkill.hasAttribute('data-en') && originalSkill.hasAttribute('data-pt')) {
+            skillTag.setAttribute('data-en', originalSkill.getAttribute('data-en'));
+            skillTag.setAttribute('data-pt', originalSkill.getAttribute('data-pt'));
+            console.log('Added translation attributes to technical skill:', skill, 'en:', originalSkill.getAttribute('data-en'), 'pt:', originalSkill.getAttribute('data-pt'));
+        } else {
+            console.log('No translation attributes found for technical skill:', skill);
+        }
+        
         skillsContainer.appendChild(skillTag);
     });
     
@@ -3535,6 +3559,16 @@ function populateRecruiterSummary() {
         skillTag.className = 'recruiter-skill';
         skillTag.style.background = 'var(--secondary-color)';
         skillTag.textContent = chip.textContent.trim();
+        
+        // Add translation attributes if the original chip has them
+        if (chip.hasAttribute('data-en') && chip.hasAttribute('data-pt')) {
+            skillTag.setAttribute('data-en', chip.getAttribute('data-en'));
+            skillTag.setAttribute('data-pt', chip.getAttribute('data-pt'));
+            console.log('Added translation attributes to soft skill:', chip.textContent.trim(), 'en:', chip.getAttribute('data-en'), 'pt:', chip.getAttribute('data-pt'));
+        } else {
+            console.log('No translation attributes found for soft skill:', chip.textContent.trim());
+        }
+        
         softSkillsDiv.appendChild(skillTag);
     });
     
@@ -3556,6 +3590,17 @@ function populateRecruiterSummary() {
         skillTag.className = 'recruiter-skill';
         skillTag.style.background = 'var(--accent-color)';
         skillTag.textContent = skill;
+        
+        // Add translation attributes if the original skill has them
+        const originalSkill = document.querySelector(`.skill-item span[data-en="${skill}"], .skill-item span[data-pt="${skill}"]`);
+        if (originalSkill && originalSkill.hasAttribute('data-en') && originalSkill.hasAttribute('data-pt')) {
+            skillTag.setAttribute('data-en', originalSkill.getAttribute('data-en'));
+            skillTag.setAttribute('data-pt', originalSkill.getAttribute('data-pt'));
+            console.log('Added translation attributes to improvement skill:', skill, 'en:', originalSkill.getAttribute('data-en'), 'pt:', originalSkill.getAttribute('data-pt'));
+        } else {
+            console.log('No translation attributes found for improvement skill:', skill);
+        }
+        
         improvementDiv.appendChild(skillTag);
     });
     
@@ -3671,8 +3716,8 @@ function populateRecruiterSummary() {
                        en: 'Apr 2024 - Present · 1 yr 7 mos'
                    },
                    description: {
-                       pt: 'Lidero projetos de gestão de APIs para clientes de telecomunicações e governo, implementando soluções Google Apigee e promovendo excelência técnica através de Infrastructure as Code e GitOps.',
-                       en: 'Leading API Management projects for telecommunications and government clients, implementing Google Apigee solutions and driving technical excellence through Infrastructure as Code and GitOps.'
+                       pt: 'Lidero uma squad num projeto de gestão de APIs em larga escala para uma empresa de telecomunicações latino-americana, implementando e governando APIs no Google Apigee sob padrões TM Forum Open API. Defini melhores práticas, modelos de governação e regras de compliance entre ambientes. Atuo como líder técnica num projeto de interoperabilidade digital governamental, orientando arquitetura, design e desenvolvimento de APIs para modernizar e automatizar integração de serviços, melhorando fiabilidade e observabilidade em sistemas do setor público. Presto suporte especializado para empresa de aviação em AWS API Gateway, otimizando arquitetura de APIs, melhorando performance e segurança, e resolvendo bottlenecks de integração. Contribuo para design de soluções e propostas pré-vendas, definindo estratégias de adoção de API management e DevOps alinhadas com objetivos de negócio e melhores práticas da indústria.',
+                       en: 'Leading a squad in a large-scale API Management project for a Latin American telecommunications company, implementing and governing APIs in Google Apigee under TM Forum Open API standards. Defined best practices, governance models, and compliance rules across environments. Acting as technical lead in a government digital interoperability project, guiding API architecture, design, and development to modernize and automate service integration, enhancing reliability and observability across public sector systems. Providing specialized support for an aviation company on AWS API Gateway, optimizing API architecture, improving performance and security posture, and resolving integration bottlenecks. Contributing to solution design and pre-sales proposals, defining API management and DevOps adoption strategies aligned with business goals and industry best practices.'
                    }
                },
                {
@@ -3686,8 +3731,8 @@ function populateRecruiterSummary() {
                        en: 'Feb 2021 - Apr 2024 · 3 yrs 3 mos'
                    },
                    description: {
-                       pt: 'Ajudo clientes a migrar para AWS Cloud, construo infraestruturas de raiz e faço deploy de aplicações em clusters EKS. Desenvolvi soluções abrangentes de fábrica AMI e ganhei experiência com Google Apigee.',
-                       en: 'Helping clients migrate to AWS Cloud, building infrastructures from scratch, and deploying applications into EKS clusters. Developed comprehensive AMI factory solutions and gained experience with Google Apigee.'
+                       pt: 'Ajudei clientes a migrar infraestruturas on-premises para AWS Cloud, permitindo-lhes aproveitar escalabilidade, segurança e custo-efetividade. Desenvolvi scripts PowerShell para automação de backups de ficheiros para buckets S3. Construí infraestruturas desde o zero na cloud usando serviços AWS e melhores práticas com Infrastructure as Code (Terraform e AWS CloudFormation). Implementei soluções de autoscaling Kubernetes com Karpenter e AWS EKS Cluster Autoscaler para minimizar custos e usar recursos eficientemente. Integrei ferramentas GitOps como ArgoCD, permitindo aos developers fazer deploy do código nas suas plataformas VCS (GitLab, GitHub, BitBucket) e sincronizar automaticamente mudanças no cluster Kubernetes. Desenvolvi uma solução abrangente de AMI factory usando AWS Image Builder, Lambda Functions, SNS, AWS SDK e CDK, automatizando o ciclo de vida das AMIs com melhores práticas de patch management, compliance e version control.',
+                       en: 'Helped clients migrate on-premises infrastructures to AWS Cloud, enabling them to leverage scalability, security and cost-effectiveness. Developed PowerShell scripts for automation of file backups to S3 buckets. Built infrastructures from scratch in the cloud using AWS services and best practices with Infrastructure as Code (Terraform and AWS CloudFormation). Implemented Kubernetes autoscaling mechanisms with Karpenter and AWS EKS Cluster Autoscaler to minimize costs and efficiently use needed resources. Enhanced Kubernetes cluster deployments by integrating GitOps tools, such as ArgoCD, enabling developers to deploy their code on their VCS platform (GitLab, GitHub, BitBucket) and automatically synchronize changes in the Kubernetes cluster. Developed a comprehensive AMI factory solution using AWS Image Builder, Lambda Functions, SNS, AWS SDK and CDK, streamlining the creation, management, and deployment of Amazon Machine Images (AMIs) to ensure consistency, security, and efficiency across environments.'
                    }
                },
                {
@@ -3771,8 +3816,8 @@ function populateRecruiterSummary() {
                 en: 'Telecom API Management & Implementation'
             },
             description: {
-                pt: 'Projeto de gestão de APIs em larga escala para empresa de telecomunicações latino-americana, implementando Google Apigee sob padrões TM Forum Open API.',
-                en: 'Large-scale API Management project for Latin American telecommunications company, implementing Google Apigee under TM Forum Open API standards.'
+                pt: 'Lidero uma squad num projeto de gestão de APIs em larga escala para uma empresa de telecomunicações latino-americana, implementando e governando APIs no Google Apigee sob padrões TM Forum Open API. Defini melhores práticas, modelos de governação e regras de compliance entre ambientes, padronizando APIs para facilitar integração de clientes com os sistemas da empresa.',
+                en: 'Leading a squad in a large-scale API Management project for a Latin American telecommunications company, implementing and governing APIs in Google Apigee under TM Forum Open API standards. Defined best practices, governance models, and compliance rules across environments, standardizing APIs to enable clients ease of integration with company systems.'
             },
             tech: ['Google Apigee', 'TM Forum APIs', 'Bitbucket', 'AWS']
         },
@@ -3782,8 +3827,8 @@ function populateRecruiterSummary() {
                 en: 'Public Sector Interoperability'
             },
             description: {
-                pt: 'Arquitetura e governação de APIs, com liderança técnica, para modernizar e automatizar a integração de serviços em sistemas públicos.',
-                en: 'API architecture, governance and technical leadership to modernize and automate service integration across public systems.'
+                pt: 'Atuo como líder técnica num projeto de interoperabilidade digital governamental, orientando arquitetura, design e desenvolvimento de APIs para modernizar e automatizar integração de serviços, melhorando fiabilidade e observabilidade em sistemas do setor público. Contribuo para design de soluções e propostas pré-vendas, definindo estratégias de adoção de API management alinhadas com objetivos de negócio.',
+                en: 'Acting as technical lead in a government digital interoperability project, guiding API architecture, design, and development to modernize and automate service integration, enhancing reliability and observability across public sector systems. Contributing to solution design and pre-sales proposals, defining API management adoption strategies aligned with business goals.'
             },
             tech: ['Google Apigee', 'Terraform', 'ArgoCD', 'Observability']
         },
@@ -3793,8 +3838,8 @@ function populateRecruiterSummary() {
                 en: 'AWS API Gateway Support'
             },
             description: {
-                pt: 'Suporte especializado para empresa de aviação em AWS API Gateway, otimizando arquitetura de APIs e resolvendo bottlenecks de integração.',
-                en: 'Specialized support for aviation company on AWS API Gateway, optimizing API architecture and resolving integration bottlenecks.'
+                pt: 'Presto suporte especializado para empresa de aviação em AWS API Gateway, otimizando arquitetura de APIs, melhorando performance e segurança, e resolvendo bottlenecks de integração. Contribuo para design de soluções e propostas pré-vendas, definindo estratégias de adoção de DevOps alinhadas com objetivos de negócio e melhores práticas da indústria.',
+                en: 'Providing specialized support for an aviation company on AWS API Gateway, optimizing API architecture, improving performance and security posture, and resolving integration bottlenecks. Contributing to solution design and pre-sales proposals, defining DevOps adoption strategies aligned with business goals and industry best practices.'
             },
             tech: ['AWS API Gateway', 'Terraform', 'Azure DevOps', 'Python']
         },
@@ -3804,10 +3849,43 @@ function populateRecruiterSummary() {
                 en: 'On-Premises to AWS Cloud Infrastructure Migration'
             },
             description: {
-                pt: 'Entrega end‑to‑end na banca: migração de on‑prem para AWS, workloads Docker migrados para Kubernetes, GitOps para EKS, pipeline de AMIs e estratégia de autoscaling.',
-                en: 'End-to-end delivery in banking: on‑prem to AWS migration, Docker workloads migrated to Kubernetes, GitOps to EKS, AMI pipeline and autoscaling strategy.'
+                pt: 'Entrega end‑to‑end na banca: migração de on‑prem para AWS, workloads Docker migrados para Kubernetes, GitOps para EKS, pipeline de AMIs e estratégia de autoscaling. Desenvolvi uma solução abrangente de AMI factory usando AWS Image Builder, Lambda Functions, SNS, AWS SDK e CDK, automatizando o ciclo de vida das AMIs com melhores práticas de patch management, compliance e version control.',
+                en: 'End-to-end delivery in banking: on‑prem to AWS migration, Docker workloads migrated to Kubernetes, GitOps to EKS, AMI pipeline and autoscaling strategy. Developed a comprehensive AMI factory solution using AWS Image Builder, Lambda Functions, SNS, AWS SDK and CDK, streamlining the creation, management, and deployment of Amazon Machine Images (AMIs) to ensure consistency, security, and efficiency across environments.'
             },
             tech: ['ArgoCD', 'Helm', 'EKS', 'GitLab CI', 'AWS Image Builder', 'Lambda', 'CDK', 'Karpenter', 'Cluster Autoscaler']
+        },
+        {
+            title: {
+                pt: 'Automação de Backups S3',
+                en: 'S3 Backup Automation'
+            },
+            description: {
+                pt: 'Automatizei backups de ficheiros para S3 com scripts PowerShell, desenvolvendo soluções para empresa industrial que permitiram backups fiáveis e recuperação assegurada, melhorando a eficiência operacional e reduzindo riscos de perda de dados.',
+                en: 'Automated file backups to S3 using PowerShell scripts for industrial company, developing solutions that enabled reliable backups and ensured recovery, improving operational efficiency and reducing data loss risks.'
+            },
+            tech: ['PowerShell', 'AWS S3', 'Windows Scheduled Tasks']
+        },
+        {
+            title: {
+                pt: 'Migração de ERP para a Cloud',
+                en: 'ERP Cloud Migration'
+            },
+            description: {
+                pt: 'Migrei de Azure para AWS com desenho de CIDR para VPC/subnets, dimensionamento de EC2, EFS para ficheiros, Application Load Balancer para distribuição de carga e CloudWatch para logging. Implementei ambientes seguros e reprodutíveis usando Infrastructure as Code.',
+                en: 'Migration from Azure to AWS with VPC/subnet CIDR design, EC2 sizing, EFS for file storage, Application Load Balancer for traffic distribution, and CloudWatch for logging. Implemented secure, repeatable environments using Infrastructure as Code.'
+            },
+            tech: ['Terraform', 'AWS', 'VPC/Subnets', 'EC2', 'EFS', 'ALB', 'CloudWatch']
+        },
+        {
+            title: {
+                pt: 'Infraestrutura AWS FinTech de Raiz',
+                en: 'FinTech AWS Infrastructure from Scratch'
+            },
+            description: {
+                pt: 'Desenhei e provisionei landing zones e stacks de aplicações em AWS com Terraform e AWS CloudFormation, seguindo boas práticas de segurança e compliance. Implementei IaC padronizado, onboarding mais rápido e governação reforçada para cliente FinTech.',
+                en: 'Designed and provisioned AWS landing zones and app stacks using Terraform and AWS CloudFormation following security and compliance best practices. Implemented standardized IaC, faster onboarding, and stronger governance for FinTech client.'
+            },
+            tech: ['Terraform', 'AWS CloudFormation', 'AWS', 'Networking']
         }
     ];
     
@@ -3858,32 +3936,7 @@ function populateRecruiterSummary() {
         projectsContainer.appendChild(projectItem);
     });
     
-    // Populate contact with real information
-    const contactContainer = document.getElementById('recruiterContact');
-    contactContainer.innerHTML = '';
-    
-    // Add LinkedIn
-    const linkedinDiv = document.createElement('div');
-    linkedinDiv.className = 'contact-item';
-    linkedinDiv.innerHTML = '<span>💼</span><a href="https://www.linkedin.com/in/ines-fv-lino/" target="_blank">LinkedIn Profile</a>';
-    contactContainer.appendChild(linkedinDiv);
-    
-    // Add GitHub
-    const githubDiv = document.createElement('div');
-    githubDiv.className = 'contact-item';
-    githubDiv.innerHTML = '<span>🐙</span><a href="https://github.com/ineslino" target="_blank">GitHub Portfolio</a>';
-    contactContainer.appendChild(githubDiv);
-    
-    // Add CV download link
-    const cvDownloadDiv = document.createElement('div');
-    cvDownloadDiv.className = 'contact-item';
-    cvDownloadDiv.style.marginTop = '1rem';
-    cvDownloadDiv.style.padding = '0.75rem';
-    cvDownloadDiv.style.background = 'rgba(255,255,255,0.1)';
-    cvDownloadDiv.style.borderRadius = '8px';
-    cvDownloadDiv.style.border = '1px solid rgba(255,255,255,0.2)';
-    cvDownloadDiv.innerHTML = '<span>📄</span><a href="CV-ENG.pdf" target="_blank" style="color: white; text-decoration: none; font-weight: 600;">Download CV (PDF)</a>';
-    contactContainer.appendChild(cvDownloadDiv);
+    // Contact section removed - CV download button is now at the top
     
     // Initialize language for recruiter mode
     updateRecruiterContent(currentLanguage);
@@ -3900,10 +3953,7 @@ function toggleRecruiterLanguageDirect() {
     
     console.log('New currentLanguage:', currentLanguage);
     
-    // Update recruiter content
-    updateRecruiterContent(currentLanguage);
-    
-    // Update button text - SIMPLE AND DIRECT
+    // CRITICAL: Update button text FIRST, before any other operations
     const button = document.getElementById('recruiterLangText');
     console.log('Button element:', button);
     
@@ -3911,18 +3961,19 @@ function toggleRecruiterLanguageDirect() {
         const newText = currentLanguage.toUpperCase();
         console.log('Setting button text to:', newText);
         
-        // Direct assignment
+        // Force immediate update
         button.textContent = newText;
+        button.innerHTML = newText;
         
-        // Verify it was set
         console.log('Button text after setting:', button.textContent);
-        
-        // Force DOM update
-        button.style.display = 'none';
-        button.offsetHeight; // Trigger reflow
-        button.style.display = '';
-        
-        console.log('Button text after force update:', button.textContent);
+    }
+    
+    // Update recruiter content (this might fail, but button is already updated)
+    try {
+        updateRecruiterContent(currentLanguage);
+    } catch (error) {
+        console.error('Error updating recruiter content:', error);
+        // Button is already updated, so we're good
     }
     
     console.log('=== RECRUITER LANGUAGE TOGGLE END ===');
@@ -3981,39 +4032,60 @@ function updateRecruiterContent(lang) {
     };
     
     Object.entries(sections).forEach(([id, text]) => {
-        const element = document.querySelector(`#${id}`).parentNode.querySelector('h3');
-        if (element) {
-            element.textContent = text;
+        try {
+            const sectionElement = document.querySelector(`#${id}`);
+            if (sectionElement && sectionElement.parentNode) {
+                const element = sectionElement.parentNode.querySelector('h3');
+                if (element) {
+                    element.textContent = text;
+                }
+            }
+        } catch (error) {
+            console.log(`Could not update section ${id}:`, error);
+            // Continue with other sections
         }
     });
     
     // Update soft skills title
-    const softSkillsTitle = document.querySelector('#recruiterSkills').parentNode.querySelector('h4');
-    if (softSkillsTitle) {
-        softSkillsTitle.textContent = lang === 'pt' ? 'Soft Skills' : 'Soft Skills';
+    const recruiterSkillsElement = document.querySelector('#recruiterSkills');
+    if (recruiterSkillsElement && recruiterSkillsElement.parentNode) {
+        const softSkillsTitle = recruiterSkillsElement.parentNode.querySelector('h4');
+        if (softSkillsTitle) {
+            softSkillsTitle.textContent = lang === 'pt' ? 'Soft Skills' : 'Soft Skills';
+        }
     }
     
     // Update areas of development title
-    const improvementTitle = document.querySelector('#recruiterSkills').parentNode.querySelectorAll('h4')[1];
-    if (improvementTitle) {
-        improvementTitle.textContent = lang === 'pt' ? 'Áreas de Desenvolvimento' : 'Areas of Development';
+    if (recruiterSkillsElement && recruiterSkillsElement.parentNode) {
+        const improvementTitle = recruiterSkillsElement.parentNode.querySelectorAll('h4')[1];
+        if (improvementTitle) {
+            improvementTitle.textContent = lang === 'pt' ? 'Áreas de Desenvolvimento' : 'Areas of Development';
+        }
     }
     
-    // Update contact links
-    const linkedinLink = document.querySelector('#recruiterContact a[href*="linkedin"]');
-    if (linkedinLink) {
-        linkedinLink.textContent = lang === 'pt' ? 'Perfil LinkedIn' : 'LinkedIn Profile';
+    // Update recruiter skills tags
+    const recruiterSkillsContainer = document.getElementById('recruiterSkills');
+    if (recruiterSkillsContainer) {
+        // Update all skill tags in recruiter mode
+        const skillTags = recruiterSkillsContainer.querySelectorAll('.recruiter-skill[data-en][data-pt]');
+        console.log('Found recruiter skill tags:', skillTags.length);
+        skillTags.forEach(tag => {
+            console.log('Translating tag:', tag.textContent, 'to:', tag.dataset[lang]);
+            tag.textContent = tag.dataset[lang];
+        });
     }
     
-    const githubLink = document.querySelector('#recruiterContact a[href*="github"]');
-    if (githubLink) {
-        githubLink.textContent = lang === 'pt' ? 'Portfolio GitHub' : 'GitHub Portfolio';
+    // Update areas of development tags - they are added after the skills container
+    const allRecruiterSkills = recruiterSkillsContainer?.parentNode?.querySelectorAll('.recruiter-skill[data-en][data-pt]');
+    console.log('Found all recruiter skills:', allRecruiterSkills?.length);
+    if (allRecruiterSkills) {
+        allRecruiterSkills.forEach(tag => {
+            console.log('Translating all recruiter tag:', tag.textContent, 'to:', tag.dataset[lang]);
+            tag.textContent = tag.dataset[lang];
+        });
     }
     
-    const cvLink = document.querySelector('#recruiterContact a[href*="pdf"]');
-    if (cvLink) {
-        cvLink.textContent = lang === 'pt' ? 'Descarregar CV (PDF)' : 'Download CV (PDF)';
-    }
+    // Contact links removed - CV download button is now at the top
     
     // Update badge links text
     const badgeLinks = document.querySelectorAll('#recruiterCertifications a[href*="credly"]');
@@ -4031,17 +4103,23 @@ function updateRecruiterContent(lang) {
             '🇵🇹 Portuguese (Native) • 🇬🇧 English (C2) • 🇪🇸 Spanish (Professional)';
     }
     
+    // Update CV download button
+    const cvDownloadBtn = document.getElementById('recruiterCVDownload');
+    if (cvDownloadBtn) {
+        cvDownloadBtn.textContent = lang === 'pt' ? '📄 Descarregar CV (PDF)' : '📄 Download CV (PDF)';
+    }
+    
     // Update experience descriptions
     const experienceDescriptions = document.querySelectorAll('#recruiterExperience .experience-description');
     experienceDescriptions.forEach((desc, index) => {
         const descriptions = [
             {
-                pt: 'Lidero projetos de gestão de APIs para clientes de telecomunicações e governo, implementando soluções Google Apigee e promovendo excelência técnica através de Infrastructure as Code e GitOps.',
-                en: 'Leading API Management projects for telecommunications and government clients, implementing Google Apigee solutions and driving technical excellence through Infrastructure as Code and GitOps.'
+                pt: 'Lidero uma squad num projeto de gestão de APIs em larga escala para uma empresa de telecomunicações latino-americana, implementando e governando APIs no Google Apigee sob padrões TM Forum Open API. Defini melhores práticas, modelos de governação e regras de compliance entre ambientes. Atuo como líder técnica num projeto de interoperabilidade digital governamental, orientando arquitetura, design e desenvolvimento de APIs para modernizar e automatizar integração de serviços, melhorando fiabilidade e observabilidade em sistemas do setor público. Presto suporte especializado para empresa de aviação em AWS API Gateway, otimizando arquitetura de APIs, melhorando performance e segurança, e resolvendo bottlenecks de integração.',
+                en: 'Leading a squad in a large-scale API Management project for a Latin American telecommunications company, implementing and governing APIs in Google Apigee under TM Forum Open API standards. Defined best practices, governance models, and compliance rules across environments. Acting as technical lead in a government digital interoperability project, guiding API architecture, design, and development to modernize and automate service integration, enhancing reliability and observability across public sector systems. Providing specialized support for an aviation company on AWS API Gateway, optimizing API architecture, improving performance and security posture, and resolving integration bottlenecks.'
             },
             {
-                pt: 'Ajudo clientes a migrar para AWS Cloud, construo infraestruturas de raiz e faço deploy de aplicações em clusters EKS. Desenvolvi soluções abrangentes de fábrica AMI e ganhei experiência com Google Apigee.',
-                en: 'Helping clients migrate to AWS Cloud, building infrastructures from scratch, and deploying applications into EKS clusters. Developed comprehensive AMI factory solutions and gained experience with Google Apigee.'
+                pt: 'Ajudei clientes a migrar infraestruturas on-premises para AWS Cloud, permitindo-lhes aproveitar escalabilidade, segurança e custo-efetividade. Desenvolvi scripts PowerShell para automação de backups de ficheiros para buckets S3. Construí infraestruturas desde o zero na cloud usando serviços AWS e melhores práticas com Infrastructure as Code (Terraform e AWS CloudFormation). Implementei soluções de autoscaling Kubernetes com Karpenter e AWS EKS Cluster Autoscaler para minimizar custos e usar recursos eficientemente. Integrei ferramentas GitOps como ArgoCD, permitindo aos developers fazer deploy do código nas suas plataformas VCS e sincronizar automaticamente mudanças no cluster Kubernetes.',
+                en: 'Helped clients migrate on-premises infrastructures to AWS Cloud, enabling them to leverage scalability, security and cost-effectiveness. Developed PowerShell scripts for automation of file backups to S3 buckets. Built infrastructures from scratch in the cloud using AWS services and best practices with Infrastructure as Code (Terraform and AWS CloudFormation). Implemented Kubernetes autoscaling mechanisms with Karpenter and AWS EKS Cluster Autoscaler to minimize costs and efficiently use needed resources. Enhanced Kubernetes cluster deployments by integrating GitOps tools, such as ArgoCD, enabling developers to deploy their code on their VCS platform and automatically synchronize changes in the Kubernetes cluster.'
             },
             {
                 pt: 'Testes funcionais, exploratórios e de regressão em web/mobile. Depuração de rede com Charles Proxy; relatórios de bugs reproduzíveis com logs/HAR.',
@@ -4057,19 +4135,9 @@ function updateRecruiterContent(lang) {
     // Update project descriptions
     const projectDescriptions = document.querySelectorAll('#recruiterProjects .project-description');
     projectDescriptions.forEach((desc, index) => {
-        // Get the original description from the main page
-        const projectCards = document.querySelectorAll('.project-card');
-        if (projectCards[index]) {
-            const originalDesc = projectCards[index].querySelector('p');
-            if (originalDesc) {
-                // Check if the description has data attributes for translation
-                if (originalDesc.hasAttribute('data-pt') && originalDesc.hasAttribute('data-en')) {
-                    desc.textContent = originalDesc.dataset[lang];
-                } else {
-                    // Use the current text content
-                    desc.textContent = originalDesc.textContent;
-                }
-            }
+        // Use the data attributes that were set when creating the project items
+        if (desc.hasAttribute('data-pt') && desc.hasAttribute('data-en')) {
+            desc.textContent = desc.dataset[lang];
         }
     });
     
