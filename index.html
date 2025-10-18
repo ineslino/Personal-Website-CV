@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inês Lino - API Platform Engineer & DevOps Engineer | Orchestrating Digital Symphonies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Inês Lino — API Platform & DevOps Engineer">
+    <meta property="og:description" content="API Management em Apigee, GitOps, IaC multi‑cloud e AWS API Gateway.">
+    <meta property="og:image" content="og-image.png">
+    <meta property="og:url" content="https://ineslino.dev/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', {
+            page_title: 'Inês Lino - API Platform & DevOps Engineer',
+            page_location: window.location.href,
+            custom_map: {
+                'custom_parameter_1': 'portfolio_visitor',
+                'custom_parameter_2': 'devops_engineer'
+            }
+        });
+        
+        // Enhanced Analytics Events
+        function trackEasterEgg(eggType) {
+            gtag('event', 'easter_egg_found', {
+                'event_category': 'engagement',
+                'event_label': eggType,
+                'value': 1
+            });
+        }
+        
+        function trackSectionView(sectionName) {
+            gtag('event', 'section_view', {
+                'event_category': 'navigation',
+                'event_label': sectionName,
+                'value': 1
+            });
+        }
+        
+        function trackGamePlay(gameType, score) {
+            gtag('event', 'game_played', {
+                'event_category': 'engagement',
+                'event_label': gameType,
+                'value': score
+            });
+        }
+        
+        function trackTechInteraction(techName) {
+            gtag('event', 'tech_interaction', {
+                'event_category': 'engagement',
+                'event_label': techName,
+                'value': 1
+            });
+        }
+        
+        function trackProjectView(projectName) {
+            gtag('event', 'project_view', {
+                'event_category': 'engagement',
+                'event_label': projectName,
+                'value': 1
+            });
+        }
+        
+        // Track page load
+        gtag('event', 'page_view', {
+            'page_title': 'Inês Lino Portfolio',
+            'page_location': window.location.href,
+            'engagement_time_msec': Date.now()
+        });
+    </script>
+</head>
+<body>
+    <!-- Background Music Visualizer -->
+    <div class="music-visualizer">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Movie/Series Easter Eggs -->
+    <div id="interstellarEffect" class="movie-effect"></div>
+    <div id="whiplashEffect" class="movie-effect"></div>
+    <div id="gameOfThronesEffect" class="movie-effect"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg class="logo" width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Clean, modern design -->
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="url(#logoGradient)" stroke-width="3"/>
+                    
+                    <!-- Letter I - Bold and clean -->
+                    <rect x="35" y="20" width="10" height="60" fill="url(#logoGradient)" rx="2"/>
+                    <rect x="30" y="20" width="20" height="8" fill="url(#logoGradient)" rx="4"/>
+                    <rect x="30" y="72" width="20" height="8" fill="url(#logoGradient)" rx="4"/>
+                    
+                    <!-- Letter L - Bold and clean -->
+                    <rect x="55" y="20" width="10" height="60" fill="url(#logoGradient)" rx="2"/>
+                    <rect x="55" y="72" width="25" height="8" fill="url(#logoGradient)" rx="4"/>
+                    
+                    <!-- Small decorative elements -->
+                    <circle cx="25" cy="25" r="3" fill="url(#logoGradient)" opacity="0.6"/>
+                    <circle cx="75" cy="25" r="3" fill="url(#logoGradient)" opacity="0.6"/>
+                    <circle cx="25" cy="75" r="3" fill="url(#logoGradient)" opacity="0.6"/>
+                    <circle cx="75" cy="75" r="3" fill="url(#logoGradient)" opacity="0.6"/>
+                    
+                    <!-- Gradient Definition -->
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Inês Lino</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#about" class="nav-link" data-en="About" data-pt="Sobre">Sobre</a>
+                <a href="#experience" class="nav-link" data-en="Experience" data-pt="Experiência">Experiência</a>
+                <a href="#skills" class="nav-link" data-en="Skills" data-pt="Competências">Competências</a>
+                <a href="#certifications" class="nav-link" data-en="Certifications" data-pt="Certificações">Certificações</a>
+                <a href="#projects" class="nav-link" data-en="Projects" data-pt="Projetos">Projetos</a>
+                <a href="#contact" class="nav-link" data-en="Contact" data-pt="Contacto">Contacto</a>
+            </div>
+                <div class="nav-controls">
+                <div class="language-toggle">
+                    <button id="langBtn" class="lang-btn">
+                        <i class="fas fa-globe"></i>
+                        <span>PT</span>
+                    </button>
+                </div>
+                <div class="theme-toggle">
+                    <button id="themeBtn" class="theme-btn">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <div class="easter-egg-hint">
+                    <button id="hintBtn" class="hint-btn" title="Dica: Experimenta digitar códigos secretos!">
+                        <i class="fas fa-key"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title" data-en="API Platform & DevOps Engineer" data-pt="API Platform & DevOps Engineer">API Platform & DevOps Engineer</h1>
+                    <p class="hero-description" data-en="I orchestrate API platforms and help teams deliver software with security, speed, and governance. I work with API Management in Apigee and DevOps automation with Kubernetes, Terraform, ArgoCD, and Docker, applying GitOps and IaC practices across multi‑cloud environments. I build integrations and pipelines that strengthen observability, accelerate delivery, and increase solution reliability." data-pt="Orquestro plataformas de APIs e ajudo equipas a entregar software com segurança, velocidade e governação. Trabalho com API Management em Apigee e automação DevOps com Kubernetes, Terraform, ArgoCD e Docker, aplicando práticas GitOps e IaC em ambientes multi-cloud. Desenvolvo integrações e pipelines que reforçam a observabilidade, aceleram entregas e elevam a fiabilidade das soluções.">
+                        Orquestro plataformas de APIs e ajudo equipas a entregar software com segurança, velocidade e governação. Trabalho com API Management em Apigee e automação DevOps com Kubernetes, Terraform, ArgoCD e Docker, aplicando práticas GitOps e IaC em ambientes multi-cloud. Desenvolvo integrações e pipelines que reforçam a observabilidade, aceleram entregas e elevam a fiabilidade das soluções.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="scrollToSection('experience')">
+                            <i class="fas fa-rocket"></i>
+                            <span data-en="View Experience" data-pt="Ver Experiência">Ver Experiência</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="playDevOpsGame()">
+                            <i class="fas fa-gamepad"></i>
+                            <span data-en="DevOps Challenge" data-pt="Desafio DevOps">Desafio DevOps</span>
+                        </button>
+                        <a href="CV-ENG.pdf" target="_blank" class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            <span data-en="Download CV" data-pt="Descarregar CV">Descarregar CV</span>
+                        </a>
+                    </div>
+                    
+                </div>
+                <div class="hero-visual">
+                    <div class="tech-showcase">
+                        <div class="showcase-title">
+                            <h3 data-en="Core Technologies" data-pt="Tecnologias Principais">Tecnologias Principais</h3>
+                            <p data-en="Technologies I work with daily" data-pt="Tecnologias com que trabalho diariamente">Tecnologias com que trabalho diariamente</p>
+                        </div>
+                        <div class="tech-grid">
+                            <div class="tech-item" data-tech="apigee">
+                                <i class="fas fa-cloud"></i>
+                                <span>Google Apigee</span>
+                            </div>
+                            <div class="tech-item" data-tech="aws">
+                                <i class="fab fa-aws"></i>
+                                <span>AWS</span>
+                            </div>
+                            <div class="tech-item" data-tech="kubernetes">
+                                <i class="fas fa-cube"></i>
+                                <span>Kubernetes</span>
+                            </div>
+                            <div class="tech-item" data-tech="terraform">
+                                <i class="fas fa-mountain"></i>
+                                <span>Terraform</span>
+                            </div>
+                            <div class="tech-item" data-tech="python">
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="tech-item" data-tech="argocd">
+                                <i class="fas fa-ship"></i>
+                                <span>ArgoCD</span>
+                            </div>
+                            <div class="tech-item" data-tech="docker">
+                                <i class="fab fa-docker"></i>
+                                <span>Docker</span>
+                            </div>
+                            <div class="tech-item" data-tech="kibana">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Kibana</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Command Palette -->
+    <div class="cmdk" id="cmdk" aria-hidden="true" role="dialog" aria-label="Command Palette">
+        <div class="cmdk-dialog">
+            <input id="cmdk-input" class="cmdk-input" type="text" placeholder="Search • Go to section • Toggle theme/lang/recruiter" aria-label="Command" />
+            <div class="cmdk-list" id="cmdk-list" role="listbox"></div>
+            <div class="cmdk-hint">↩ Enter • ⎋ Esc • ↑/↓ Navigate</div>
+        </div>
+    </div>
+
+    <!-- Recruiter Mode Summary -->
+    <div class="recruiter-summary">
+        <div class="recruiter-header">
+            <div class="recruiter-header-top">
+                <h1 class="recruiter-name" id="recruiterName">Inês Lino</h1>
+                <div class="recruiter-language-toggle">
+                    <button id="recruiterLangBtn" class="recruiter-lang-btn" onclick="toggleRecruiterLanguageDirect()">
+                        <i class="fas fa-globe"></i>
+                        <span id="recruiterLangText">PT</span>
+                    </button>
+                </div>
+            </div>
+            <p class="recruiter-title" id="recruiterTitle">API Platform & DevOps Engineer</p>
+            <p class="recruiter-location" id="recruiterLocation">📍 Lisbon, Portugal</p>
+            <p class="recruiter-languages-header" id="recruiterHeaderLanguages">🇵🇹 Portuguese (Native) • 🇬🇧 English (C2) • 🇪🇸 Spanish (Professional)</p>
+        </div>
+
+        <div class="recruiter-grid">
+            <!-- Skills Section -->
+            <div class="recruiter-section">
+                <h3>🔧 Technical Skills</h3>
+                <div class="recruiter-skills" id="recruiterSkills">
+                    <!-- Skills will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Certifications Section -->
+            <div class="recruiter-section">
+                <h3>🏆 Certifications</h3>
+                <div id="recruiterCertifications">
+                    <!-- Certifications will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <div class="recruiter-section recruiter-experience">
+                <h3>💼 Professional Experience</h3>
+                <div id="recruiterExperience">
+                    <!-- Experience will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="recruiter-section recruiter-projects">
+                <h3>🚀 Key Projects</h3>
+                <div id="recruiterProjects">
+                    <!-- Projects will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="recruiter-section recruiter-contact">
+                <h3>📞 Contact Information</h3>
+                <div class="contact-info" id="recruiterContact">
+                    <!-- Contact will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recruiter Mode Floating Toggle -->
+    <button class="recruiter-toggle" id="recruiterToggle" type="button" aria-pressed="false" title="Recruiter Mode - One-page summary for quick scanning">
+        <span>📄</span>
+        <span>Recruiter Mode</span>
+    </button>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title" data-en="About Me" data-pt="Sobre Mim">Sobre Mim</h2>
+            <div class="about-content">
+                <div class="about-side">
+                    <div class="about-photo">
+                        <!-- Photo removed as requested -->
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card location-card lisboa-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="stat-label" data-en="Location" data-pt="Localização">Localização</div>
+                            <div class="stat-location" data-en="Lisbon, Portugal" data-pt="Lisboa, Portugal">Lisboa, Portugal</div>
+                            <div class="lisboa-effect">🌊 🏰 ☀️</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="5">0</div>
+                            <div class="stat-label" data-en="Years Experience" data-pt="Anos de Experiência">Anos de Experiência</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="8">0</div>
+                            <div class="stat-label" data-en="Cloud Certifications" data-pt="Certificações Cloud">Certificações Cloud</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="7">0</div>
+                            <div class="stat-label" data-en="Featured Projects" data-pt="Projetos Principais">Projetos Principais</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-main">
+                    <div class="philosophy-card">
+                        <h3><i class="fas fa-quote-left"></i> <span data-en="My Philosophy" data-pt="A Minha Filosofia">A Minha Filosofia</span></h3>
+                        <p data-en="For me, working with technology is a reflection of life: there are bugs, unexpected issues and moments of pure satisfaction when everything works. We learn more when something fails than when everything goes well, and that's what makes us grow, both as professionals and as people." data-pt="Para mim, trabalhar com tecnologia é um reflexo da vida: há bugs, imprevistos e momentos de pura satisfação quando tudo funciona. Aprendemos mais quando algo falha do que quando tudo corre bem, e é isso que nos faz crescer, tanto como profissionais como pessoas.">Para mim, trabalhar com tecnologia é um reflexo da vida: há bugs, imprevistos e momentos de pura satisfação quando tudo funciona. Aprendemos mais quando algo falha do que quando tudo corre bem, e é isso que nos faz crescer, tanto como profissionais como pessoas.</p>
+                        <p class="quote-source movie-quote" data-en="'What we do in life echoes in eternity.' — Gladiator" data-pt="'What we do in life echoes in eternity.' — Gladiator" data-quotes='{"interstellar": "Love is the one thing we are capable of perceiving that transcends time and space.", "whiplash": "Not quite my tempo.", "got": "Winter is coming."}'>'What we do in life echoes in eternity.' — Gladiator</p>
+                    </div>
+                    <div class="stat-card languages-card">
+                        <h3 style="color: var(--primary-color); margin-bottom: 0.75rem;" data-en="Languages" data-pt="Idiomas">Idiomas</h3>
+                        <div class="chip-row">
+                            <span class="chip">🇵🇹 Português — <span data-en="Native" data-pt="Língua Materna">Língua Materna</span></span>
+                            <span class="chip">🇬🇧 English — <span data-en="Native/Bilingual" data-pt="Nativo/Bilíngue">Nativo/Bilíngue</span></span>
+                            <span class="chip">🇪🇸 Spanish — <span data-en="Professional" data-pt="Profissional">Profissional</span></span>
+                        </div>
+                    </div>
+                    <div class="hobbies-container">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1.5rem; text-align: center;" data-en="Hobbies" data-pt="Hobbies">Hobbies</h3>
+                        <div class="passions-grid">
+                        <div class="passion-card" data-passion="music">
+                            <i class="fas fa-music"></i>
+                            <h4 data-en="Music & Vinyls" data-pt="🎵 Música & Vinis">🎵 Música & Vinis</h4>
+                            <p data-en="Growing collection spanning jazz legends, hip-hop innovators, and Portuguese rap pioneers" data-pt="Coleção crescente que abrange lendas do jazz, inovadores do hip-hop e pioneiros do rap português">Coleção crescente que abrange lendas do jazz, inovadores do hip-hop e pioneiros do rap português</p>
+                            <div class="passion-details" data-en="Music is my soul's code. Each record tells a story." data-pt="Cada vinil é como um commit no repositório da minha alma - desde o jazz atemporal de Miles Davis até às rimas cortantes de Sam The Kid, cada música conta uma história única que me inspira tanto na vida pessoal como na resolução de problemas técnicos.">Cada vinil é como um commit no repositório da minha alma - desde o jazz atemporal de Miles Davis até às rimas cortantes de Sam The Kid, cada música conta uma história única que me inspira tanto na vida pessoal como na resolução de problemas técnicos.</div>
+                        </div>
+                        <div class="passion-card" data-passion="cooking">
+                            <i class="fas fa-utensils"></i>
+                            <h4 data-en="Cooking" data-pt="🍳 Culinária">🍳 Culinária</h4>
+                            <p data-en="Exploring flavors from traditional Portuguese cuisine to innovative fusion dishes" data-pt="Explorar sabores desde a cozinha tradicional portuguesa até pratos de fusão inovadores">Explorar sabores desde a cozinha tradicional portuguesa até pratos de fusão inovadores</p>
+                            <div class="passion-details" data-en="My kitchen is my test environment for classic and modern recipes." data-pt="A minha cozinha é o meu ambiente de testes - desde bacalhau à brás até experimentos com especiarias exóticas, cada prato é um deploy de sabores únicos. Aprender técnicas tradicionais e aplicá-las com ingredientes frescos é como otimizar código legacy para novos sistemas.">A minha cozinha é o meu ambiente de testes - desde bacalhau à brás até experimentos com especiarias exóticas, cada prato é um deploy de sabores únicos. Aprender técnicas tradicionais e aplicá-las com ingredientes frescos é como otimizar código legacy para novos sistemas.</div>
+                        </div>
+                        <div class="passion-card" data-passion="cinema">
+                            <i class="fas fa-film" data-movie="interstellar"></i>
+                            <h4 data-en="Cinema & Series" data-pt="🎬 Cinema & Séries">🎬 Cinema & Séries</h4>
+                            <p data-en="From sci-fi epics to character-driven dramas and fantasy sagas" data-pt="Desde épicos de ficção científica até dramas centrados em personagens e sagas de fantasia">Desde épicos de ficção científica até dramas centrados em personagens e sagas de fantasia</p>
+                            <div class="passion-details" data-en="Storytelling inspires how I design resilient systems." data-pt="Cada história é como uma arquitetura de sistema - desde a complexidade temporal de Interstellar até a intensidade psicológica de Whiplash, os personagens são componentes que interagem para criar narrativas poderosas. Game of Thrones ensinou-me sobre escalabilidade e falhas em cascata, enquanto The Last of Us mostra como a resiliência humana se adapta a ambientes hostis.">Cada história é como uma arquitetura de sistema - desde a complexidade temporal de Interstellar até a intensidade psicológica de Whiplash, os personagens são componentes que interagem para criar narrativas poderosas. Game of Thrones ensinou-me sobre escalabilidade e falhas em cascata, enquanto The Last of Us mostra como a resiliência humana se adapta a ambientes hostis.</div>
+                        </div>
+                        <div class="passion-card" data-passion="gaming">
+                            <i class="fas fa-gamepad"></i>
+                            <h4 data-en="Gaming" data-pt="🎮 Gaming">🎮 Gaming</h4>
+                            <p data-en="Strategic games, RPGs, and puzzle-solving adventures" data-pt="Jogos estratégicos, RPGs e aventuras de resolução de puzzles">Jogos estratégicos, RPGs e aventuras de resolução de puzzles</p>
+                            <div class="passion-details" data-en="From strategy to reflexes, gaming sharpens problem‑solving." data-pt="Cada nível é como um bug para resolver - desde estratégias complexas de Civilization até reflexos rápidos de plataformas, cada jogo desenvolve diferentes competências. Os RPGs ensinam-me sobre gestão de recursos e planeamento a longo prazo, enquanto os puzzles desafiam a minha capacidade de decompor problemas complexos em componentes mais simples, exatamente como debuggar código.">Cada nível é como um bug para resolver - desde estratégias complexas de Civilization até reflexos rápidos de plataformas, cada jogo desenvolve diferentes competências. Os RPGs ensinam-me sobre gestão de recursos e planeamento a longo prazo, enquanto os puzzles desafiam a minha capacidade de decompor problemas complexos em componentes mais simples, exatamente como debuggar código.</div>
+                        </div>
+                        <div class="passion-card" data-passion="gardening">
+                            <i class="fas fa-seedling"></i>
+                            <h4 data-en="Gardening" data-pt="🌱 Jardinagem">🌱 Jardinagem</h4>
+                            <p data-en="Growing flowers and kitchen herbs like cilantro, mint, thyme, chili" data-pt="Cultivar flores ornamentais e inúmeras variedades de ervas aromáticas para cozinha">Cultivar flores ornamentais e inúmeras variedades de ervas aromáticas para cozinha</p>
+                            <div class="passion-details" data-en="Watching growth over weeks and months, celebrating each plant's unique journey." data-pt="Ver o crescimento ao longo das semanas é como observar um pipeline CI/CD - cada fase tem o seu ritmo e resultado único. Desde a germinação das sementes até à primeira colheita de coentros, cada planta tem o seu próprio ciclo de desenvolvimento. Os chili ensinam-me sobre paciência e timing, enquanto as flores ornamentais mostram como pequenos ajustes (água, luz, temperatura) podem ter impactos dramáticos no resultado final, tal como otimizar configurações de API.">Ver o crescimento ao longo das semanas é como observar um pipeline CI/CD - cada fase tem o seu ritmo e resultado único. Desde a germinação das sementes até à primeira colheita de coentros, cada planta tem o seu próprio ciclo de desenvolvimento. Os chili ensinam-me sobre paciência e timing, enquanto as flores ornamentais mostram como pequenos ajustes (água, luz, temperatura) podem ter impactos dramáticos no resultado final, tal como otimizar configurações de API.</div>
+                        </div>
+                        <div class="passion-card" data-passion="puzzles">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <h4 data-en="Building" data-pt="🧩 Lego">🧩 Lego</h4>
+                            <p data-en="Building Legos and solving puzzles" data-pt="Construir Legos e resolver puzzles">Construir Legos e resolver puzzles</p>
+                            <div class="passion-details" data-en="Each piece is like a code module - together they create something amazing." data-pt="Cada peça é como um módulo de código - juntas criam algo extraordinário.">Cada peça é como um módulo de código - juntas criam algo extraordinário.</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title" data-en="Experience" data-pt="Experiência" data-aos="fade-up" data-aos-duration="800">Experiência</h2>
+            <div class="timeline-horizontal">
+                <div class="timeline-scroll">
+                    <div class="timeline-track">
+                        <div class="timeline-item-horizontal">
+                            <div class="timeline-marker-horizontal">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="timeline-content-horizontal">
+                                <h3 data-en="Senior API Platform Engineer & DevOps Engineer" data-pt="Senior API Platform Engineer & DevOps Engineer">Senior API Platform Engineer & DevOps Engineer</h3>
+                                <h4>MagicBeans</h4>
+                                <p class="timeline-period" data-en="Apr 2024 - Present · 1 yr 7 mos" data-pt="Abr 2024 - Presente · 1 ano 7 meses">Abr 2024 - Presente · 1 ano 7 meses</p>
+                                <p data-en="Leading API Management projects for telecommunications and government clients, implementing Google Apigee solutions and driving technical excellence through Infrastructure as Code and GitOps." data-pt="Lidero projetos de gestão de APIs para clientes de telecomunicações e governo, implementando soluções Google Apigee e promovendo excelência técnica através de Infrastructure as Code e GitOps.">
+                                    Lidero projetos de gestão de APIs para clientes de telecomunicações e governo, implementando soluções Google Apigee e promovendo excelência técnica através de Infrastructure as Code e GitOps.
+                                </p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Google Apigee</span>
+                                    <span class="tech-tag">AWS</span>
+                                    <span class="tech-tag">Kubernetes</span>
+                                    <span class="tech-tag">Terraform</span>
+                                    <span class="tech-tag">ArgoCD</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item-horizontal">
+                            <div class="timeline-marker-horizontal">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="timeline-content-horizontal">
+                                <h3 data-en="DevOps Engineer" data-pt="DevOps Engineer">DevOps Engineer</h3>
+                                <h4>MagicBeans</h4>
+                                <p class="timeline-period" data-en="Feb 2021 - Apr 2024 · 3 yrs 3 mos" data-pt="Fev 2021 - Abr 2024 · 3 anos 3 meses">Fev 2021 - Abr 2024 · 3 anos 3 meses</p>
+                                <p data-en="Helping clients migrate to AWS Cloud, building infrastructures from scratch, and deploying applications into EKS clusters. Developed comprehensive AMI factory solutions and gained experience with Google Apigee." data-pt="Ajudo clientes a migrar para AWS Cloud, construo infraestruturas de raiz e faço deploy de aplicações em clusters EKS. Desenvolvi soluções abrangentes de fábrica AMI e ganhei experiência com Google Apigee.">
+                                    Ajudo clientes a migrar para AWS Cloud, construo infraestruturas de raiz e faço deploy de aplicações em clusters EKS. Desenvolvi soluções abrangentes de fábrica AMI e ganhei experiência com Google Apigee.
+                                </p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">AWS</span>
+                                    <span class="tech-tag">Kubernetes</span>
+                                    <span class="tech-tag">Terraform</span>
+                                    <span class="tech-tag">ArgoCD</span>
+                                    <span class="tech-tag">Docker</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item-horizontal">
+                            <div class="timeline-marker-horizontal">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <div class="timeline-content-horizontal">
+                                <h3 data-en="Software QA Tester" data-pt="Software QA Tester">Software QA Tester</h3>
+                                <h4 data-en="Freelance (uTest)" data-pt="Freelance (uTest)">Freelance (uTest)</h4>
+                                <p class="timeline-period" data-en="Feb 2020 - Oct 2021 · Remote" data-pt="Fev 2020 - Out 2021 · Remoto">Fev 2020 - Out 2021 · Remoto</p>
+                                <p data-en="Functional, exploratory and regression testing on web/mobile. Network debugging with Charles Proxy; reproducible bug reports with logs/HAR." data-pt="Testes funcionais, exploratórios e de regressão em web/mobile. Depuração de rede com Charles Proxy; relatórios de bugs reproduzíveis com logs/HAR.">Testes funcionais, exploratórios e de regressão em web/mobile. Depuração de rede com Charles Proxy; relatórios de bugs reproduzíveis com logs/HAR.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">QA</span>
+                                    <span class="tech-tag">Charles Proxy</span>
+                                    <span class="tech-tag">Bug Triage</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item-horizontal">
+                            <div class="timeline-marker-horizontal">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="timeline-content-horizontal">
+                                <h3 data-en="Post Graduation" data-pt="Pós-Graduação">Pós-Graduação</h3>
+                                <h4>Faculdade de Ciências da Universidade de Lisboa</h4>
+                                <p class="timeline-period" data-en="2019-2020" data-pt="2019-2020">2019-2020</p>
+                                <p data-en="Post Graduation in Computer Science." data-pt="Pós-Graduação em Informática.">Pós-Graduação em Informática.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item-horizontal">
+                            <div class="timeline-marker-horizontal">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="timeline-content-horizontal">
+                                <h3 data-en="Bachelor's Degree" data-pt="Licenciatura">Licenciatura</h3>
+                                <h4>Faculdade de Ciências da Universidade de Lisboa</h4>
+                                <p class="timeline-period" data-en="2015-2019" data-pt="2015-2019">2015-2019</p>
+                                <p data-en="Bachelor's degree in Information Technology." data-pt="Licenciatura em Tecnologias de Informação.">Licenciatura em Tecnologias de Informação.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-controls">
+                    <button class="timeline-scroll-btn prev" onclick="scrollTimeline('left')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="timeline-scroll-btn next" onclick="scrollTimeline('right')">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title" data-en="Skills & Technologies" data-pt="Competências & Tecnologias" data-aos="fade-up" data-aos-duration="800">Competências & Tecnologias</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-microchip"></i> <span data-en="Core Technologies" data-pt="Tecnologias Principais">Tecnologias Principais</span></h3>
+                    <div class="chip-row">
+                        <span class="chip">Google Apigee</span>
+                        <span class="chip">AWS</span>
+                        <span class="chip">Kubernetes</span>
+                        <span class="chip">ArgoCD</span>
+                        <span class="chip">Terraform</span>
+                        <span class="chip">GitLab CI</span>
+                        <span class="chip">Bitbucket</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Linux</span>
+                        <span class="chip">AWS CloudFormation</span>
+                        <span class="chip">AWS Image Builder</span>
+                        <span class="chip">AWS Lambda</span>
+                        <span class="chip">Helm Charts</span>
+                        <span class="chip">Amazon EKS</span>
+                        <span class="chip">Jenkins</span>
+                        <span class="chip">Docker</span>
+                        <span class="chip">PostgreSQL</span>
+                        <span class="chip">pgAdmin</span>
+                        <span class="chip">Sonarqube</span>
+                        <span class="chip">Harbor</span>
+                        <span class="chip">OpenShift</span>
+                        <span class="chip">Elastic Stack (ELK)</span>
+                        <span class="chip">Kibana</span>
+                        <span class="chip">JQuery</span>
+                        <span class="chip">PHP</span>
+                        <span class="chip">Desenvolvimento de interface web</span>
+                        <span class="chip">MySQL</span>
+                        <span class="chip">Frameworks PHP</span>
+                        <span class="chip">Charles Proxy</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-user-cog"></i> <span data-en="Core Competencies" data-pt="Competências Principais">Competências Principais</span></h3>
+                    <div class="chip-row">
+                        <span class="chip">API Architecture</span>
+                        <span class="chip">API Design</span>
+                        <span class="chip">GitOps</span>
+                        <span class="chip">CI/CD</span>
+                        <span class="chip">IaC</span>
+                        <span class="chip">Observability</span>
+                        <span class="chip">Security by Design</span>
+                        <span class="chip">Cost Optimization</span>
+                        <span class="chip">Scripting</span>
+                        <span class="chip">Machine Learning</span>
+                        <span class="chip">Localization Testing</span>
+                        <span class="chip">User Acceptance Testing</span>
+                        <span class="chip">Functional Testing</span>
+                        <span class="chip">Software Testing</span>
+                        <span class="chip">Teamwork</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-cloud"></i> <span data-en="Cloud Platforms" data-pt="Plataformas Cloud">Plataformas Cloud</span></h3>
+                    <div class="skill-items">
+                        <div class="skill-item" data-level="95">
+                            <span>AWS</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="50">
+                            <span>Google Cloud</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="20">
+                            <span>Azure</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> <span data-en="DevOps & APIs" data-pt="DevOps & APIs">DevOps & APIs</span></h3>
+                    <div class="skill-items">
+                        <div class="skill-item" data-level="98">
+                            <span>Google Apigee</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="95">
+                            <span>Kubernetes</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="60">
+                            <span>ArgoCD</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="90">
+                            <span>Terraform</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="60">
+                            <span>Helm</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> <span data-en="Programming" data-pt="Programação">Programação</span></h3>
+                    <div class="skill-items">
+                        <div class="skill-item" data-level="80">
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="80">
+                            <span>XSL</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="85">
+                            <span>Bash</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="70">
+                            <span>Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="80">
+                            <span>PowerShell</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-rocket"></i> <span data-en="Areas for Improvement" data-pt="Áreas de Melhoria">Áreas de Melhoria</span></h3>
+                    <div class="skill-items">
+                        <div class="skill-item" data-level="10">
+                            <span data-en="Machine Learning" data-pt="Machine Learning">Machine Learning</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="30">
+                            <span data-en="Cybersecurity" data-pt="Cibersegurança">Cibersegurança</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="30">
+                            <span>Ansible</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="10">
+                            <span>TypeScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-user-check"></i> <span data-en="Soft Skills" data-pt="Soft Skills">Soft Skills</span></h3>
+                    <div class="chip-row">
+                        <span class="chip" data-en="Effective Communication" data-pt="Comunicação eficaz">Comunicação eficaz</span>
+                        <span class="chip" data-en="Teamwork" data-pt="Trabalho em equipa">Trabalho em equipa</span>
+                        <span class="chip" data-en="Problem Solving" data-pt="Resolução de problemas">Resolução de problemas</span>
+                        <span class="chip" data-en="Analytical Thinking" data-pt="Pensamento analítico">Pensamento analítico</span>
+                        <span class="chip" data-en="Adaptability" data-pt="Adaptabilidade">Adaptabilidade</span>
+                        <span class="chip" data-en="Leadership" data-pt="Liderança">Liderança</span>
+                        <span class="chip" data-en="Time Management" data-pt="Gestão de tempo">Gestão de tempo</span>
+                        <span class="chip" data-en="Decision Making" data-pt="Tomada de decisões">Tomada de decisões</span>
+                        <span class="chip" data-en="Conflict Management" data-pt="Gestão de conflitos">Gestão de conflitos</span>
+                        <span class="chip" data-en="Creativity" data-pt="Criatividade">Criatividade</span>
+                        <span class="chip" data-en="Empathy" data-pt="Empatia">Empatia</span>
+                        <span class="chip" data-en="Proactivity" data-pt="Proatividade">Proatividade</span>
+                        <span class="chip" data-en="Initiative" data-pt="Iniciativa">Iniciativa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications">
+        <div class="container">
+            <h2 class="section-title" data-en="Certifications" data-pt="Certificações">Certificações</h2>
+            <div class="certifications-list">
+                <h3 class="cert-category">APIs & Apigee</h3>
+                <div class="certifications-grid">
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-google"></i>
+                        <h3 data-en="Deploy and Manage Apigee X" data-pt="Deploy and Manage Apigee X">Deploy and Manage Apigee X</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Sep 2024" data-pt="Emitido Set 2024">Emitido Set 2024</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-google"></i>
+                        <h3 data-en="Develop and Secure APIs with Apigee X" data-pt="Develop and Secure APIs with Apigee X">Develop and Secure APIs with Apigee X</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Sep 2024" data-pt="Emitido Set 2024">Emitido Set 2024</p>
+                </div>
+                
+                </div>
+                <h3 class="cert-category">Cloud & DevOps</h3>
+                <div class="certifications-grid">
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-google"></i>
+                        <h3 data-en="Implement DevOps Workflows in Google Cloud" data-pt="Implement DevOps Workflows in Google Cloud">Implement DevOps Workflows in Google Cloud</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Oct 2024" data-pt="Emitido Out 2024">Emitido Out 2024</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fas fa-code-branch"></i>
+                        <h3 data-en="GitOps Fundamentals" data-pt="GitOps Fundamentals">GitOps Fundamentals</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Dec 2023" data-pt="Emitido Dez 2023">Emitido Dez 2023</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-google"></i>
+                        <h3 data-en="Use Machine Learning APIs on Google Cloud" data-pt="Use Machine Learning APIs on Google Cloud">Use Machine Learning APIs on Google Cloud</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Dec 2024" data-pt="Emitido Dez 2024">Emitido Dez 2024</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-aws"></i>
+                        <h3 data-en="AWS Certified Developer – Associate" data-pt="AWS Certified Developer – Associate">AWS Certified Developer – Associate</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Aug 2021" data-pt="Emitido Ago 2021">Emitido Ago 2021</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fas fa-certificate"></i>
+                        <h3 data-en="Terraform Associate" data-pt="Terraform Associate">Terraform Associate</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued Sep 2022" data-pt="Emitido Set 2022">Emitido Set 2022</p>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-aws"></i>
+                        <h3 data-en="AWS Certified Cloud Practitioner" data-pt="AWS Certified Cloud Practitioner">AWS Certified Cloud Practitioner</h3>
+                    </div>
+                    <p class="cert-date" data-en="Issued May 2021" data-pt="Emitido Mai 2021">Emitido Mai 2021</p>
+                </div>
+                </div>
+                <h3 class="cert-category">Outros</h3>
+                <div class="certifications-grid">
+                        <div class="cert-card">
+                            <div class="cert-header">
+                                <i class="fab fa-udemy"></i>
+                                <h3 data-en="Full Stack Developer Course" data-pt="Curso Full Stack Developer">Curso Full Stack Developer</h3>
+                            </div>
+                            <p class="cert-date" data-en="Issued Nov 2020" data-pt="Emitido Nov 2020">Emitido Nov 2020</p>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-header">
+                                <i class="fas fa-mobile-alt"></i>
+                                <h3 data-en="Android Basics Nanodegree – Google Scholarship" data-pt="Android Basics Nanodegree – Google Scholarship">Android Basics Nanodegree – Google Scholarship</h3>
+                            </div>
+                            <p class="cert-date" data-en="Issued Sep 2017" data-pt="Emitido Set 2017">Emitido Set 2017</p>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-header">
+                                <i class="fas fa-language"></i>
+                                <h3 data-en="EF SET - English Certificate" data-pt="EF SET - English Certificate">EF SET - English Certificate</h3>
+                            </div>
+                            <p class="cert-date" data-en="" data-pt="">&nbsp;</p>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-header">
+                                <i class="fas fa-camera"></i>
+                                <h3 data-en="Photography Course" data-pt="Curso de Fotografia">Curso de Fotografia</h3>
+                            </div>
+                            <p class="cert-date" data-en="Issued Nov 2019" data-pt="Emitido Nov 2019">Emitido Nov 2019</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="publications">
+        <div class="container">
+            <h2 class="section-title" data-en="Publications" data-pt="Publicações">Publicações</h2>
+            <div class="publications-grid">
+                <div class="pub-card" data-publication-link="https://ieeexplore.ieee.org/document/9976108">
+                    <div class="pub-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h3 data-en="A Comparative Analysis of the Impact of Cryptography in IoT LoRa Applications" data-pt="A Comparative Analysis of the Impact of Cryptography in IoT LoRa Applications">A Comparative Analysis of the Impact of Cryptography in IoT LoRa Applications</h3>
+                    </div>
+                    <p class="pub-journal">Institute of Electrical and Electronics Engineers (IEEE)</p>
+                    <p class="pub-date" data-en="Published Dec 15, 2022" data-pt="Publicado 15 Dez 2022">Publicado 15 Dez 2022</p>
+                    <p class="pub-authors" data-en="Co-authored with Professor José Cecílio" data-pt="Co-autoria com o Professor José Cecílio">Co-autoria com o Professor José Cecílio</p>
+                    <div class="pub-link-indicator">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span data-en="Click to view publication" data-pt="Clique para ver a publicação">Clique para ver a publicação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title" data-en="Featured Projects" data-pt="Projetos Principais" data-aos="fade-up" data-aos-duration="800">Projetos Principais</h2>
+            <div class="projects-grid">
+                <div class="project-card" data-project="telecom-apigee" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-header">
+                        <span class="sector-tag telecom">Telecom</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <h3 data-en="Telecom API Management & Implementation" data-pt="Gestão e Implementação de APIs Telecom">Gestão e Implementação de APIs Telecom</h3>
+                        </div>
+                    </div>
+                    <p data-en="Large-scale API Management project for Latin American telecommunications company, implementing Google Apigee under TM Forum Open API standards." data-pt="Projeto de gestão de APIs em larga escala para empresa de telecomunicações latino-americana, implementando Google Apigee sob padrões TM Forum Open API.">
+                        Projeto de gestão de APIs em larga escala para empresa de telecomunicações latino-americana, implementando Google Apigee sob padrões TM Forum Open API.
+                    </p>
+                    <div class="project-tech">
+                        <span>Google Apigee</span>
+                        <span>TM Forum APIs</span>
+                        <span>Bitbucket</span>
+                        <span>AWS</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Standardization of APIs for this telecom company to enable clients ease of integration with their systems" data-pt="Padronização das APIs desta empresa de telecomunicações para permitir aos clientes facilidade de integração com os sistemas da empresa">Padronização das APIs desta empresa de telecomunicações para permitir aos clientes facilidade de integração com os sistemas da empresa</span>
+                    </div>
+                </div>
+                <div class="project-card" data-project="public-admin" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-header">
+                        <span class="sector-tag government">Administração Pública</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-university"></i>
+                            <h3 data-en="Public Sector Interoperability" data-pt="Interoperabilidade no Setor Público">Interoperabilidade no Setor Público</h3>
+                        </div>
+                    </div>
+                    <p data-en="API architecture, governance and technical leadership to modernize and automate service integration across public systems." data-pt="Arquitetura e governação de APIs, com liderança técnica, para modernizar e automatizar a integração de serviços em sistemas públicos.">Arquitetura e governação de APIs, com liderança técnica, para modernizar e automatizar a integração de serviços em sistemas públicos.</p>
+                    <div class="project-tech">
+                        <span>Google Apigee</span>
+                        <span>Terraform</span>
+                        <span>ArgoCD</span>
+                        <span>Observability</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Increased reliability and observability across agencies" data-pt="Maior fiabilidade e observabilidade entre organismos">Maior fiabilidade e observabilidade entre organismos</span>
+                    </div>
+                </div>
+                <div class="project-card" data-project="airline-aws" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-header">
+                        <span class="sector-tag aviation">Aviação</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-plane"></i>
+                            <h3 data-en="AWS API Gateway Support" data-pt="Suporte AWS API Gateway">Suporte AWS API Gateway</h3>
+                        </div>
+                    </div>
+                    <p data-en="Specialized support for aviation company on AWS API Gateway, optimizing API architecture and resolving integration bottlenecks." data-pt="Suporte especializado para empresa de aviação em AWS API Gateway, otimizando arquitetura de APIs e resolvendo bottlenecks de integração.">
+                        Suporte especializado para empresa de aviação em AWS API Gateway, otimizando arquitetura de APIs e resolvendo bottlenecks de integração.
+                    </p>
+                    <div class="project-tech">
+                        <span>AWS API Gateway</span>
+                        <span>Terraform</span>
+                        <span>Azure DevOps</span>
+                        <span>Python</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Improved performance and security" data-pt="Melhorada performance e segurança">Melhorada performance e segurança</span>
+                    </div>
+                </div>
+                <div class="project-card" data-project="banking-platform" data-aos="fade-up" data-aos-delay="400">
+                    <div class="project-header">
+                        <span class="sector-tag banking">Banking</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-piggy-bank"></i>
+                            <h3 data-en="On-Premises to AWS Cloud Infrastructure Migration" data-pt="Migração de Infraestrutura On-Premises para AWS Cloud">Migração de Infraestrutura On-Premises para AWS Cloud</h3>
+                        </div>
+                    </div>
+                    <p data-en="End-to-end delivery in banking: on‑prem to AWS migration, Docker workloads migrated to Kubernetes, GitOps to EKS, AMI pipeline and autoscaling strategy." data-pt="Entrega end‑to‑end na banca: migração de on‑prem para AWS, workloads Docker migrados para Kubernetes, GitOps para EKS, pipeline de AMIs e estratégia de autoscaling.">Entrega end‑to‑end na banca: migração de on‑prem para AWS, workloads Docker migrados para Kubernetes, GitOps para EKS, pipeline de AMIs e estratégia de autoscaling.</p>
+                    <div class="project-subitems" style="display: none;">
+                        <ul>
+                            <li><strong>GitOps & EKS</strong> — ArgoCD/Helm e GitLab CI para deployments consistentes.</li>
+                            <li><strong>AMI Factory</strong> — Image Builder, Lambda e CDK para golden images e patching automático.</li>
+                            <li><strong>Autoscaling</strong> — Karpenter e Cluster Autoscaler com right‑sizing e spot.</li>
+                            <li><strong>Migração</strong> — De on‑prem para AWS; Docker → Kubernetes.</li>
+                        </ul>
+                    </div>
+                    <div class="project-tech">
+                        <span>ArgoCD</span>
+                        <span>Helm</span>
+                        <span>EKS</span>
+                        <span>GitLab CI</span>
+                        <span>AWS Image Builder</span>
+                        <span>Lambda</span>
+                        <span>CDK</span>
+                        <span>Karpenter</span>
+                        <span>Cluster Autoscaler</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Standardized delivery and secure golden images" data-pt="Entrega padronizada e golden images seguras">Entrega padronizada e golden images seguras</span>
+                    </div>
+                </div>
+                <div class="project-card" data-project="sovena-backups" data-aos="fade-up" data-aos-delay="500">
+                    <div class="project-header">
+                        <span class="sector-tag industry">Indústria</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-warehouse"></i>
+                            <h3 data-en="S3 Backup Automation" data-pt="Automação de Backups S3">Automação de Backups S3</h3>
+                        </div>
+                    </div>
+                    <p data-en="Automated file backups to S3 using PowerShell scripts." data-pt="Automatização de backups de ficheiros para S3 com scripts PowerShell.">Automatização de backups de ficheiros para S3 com scripts PowerShell.</p>
+                    <div class="project-tech">
+                        <span>PowerShell</span>
+                        <span>AWS S3</span>
+                        <span>Windows Scheduled Tasks</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Reliable backups and recovery" data-pt="Backups fiáveis e recuperação assegurada">Backups fiáveis e recuperação assegurada</span>
+                    </div>
+                </div>
+                <div class="project-card" data-project="primavera-migration" data-aos="fade-up" data-aos-delay="600">
+                    <div class="project-header">
+                        <span class="sector-tag accountability">Accountability</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-project-diagram"></i>
+                            <h3 data-en="ERP Cloud Migration" data-pt="Migração de ERP para a Cloud">Migração de ERP para a Cloud</h3>
+                        </div>
+                    </div>
+                    <p data-en="Migration from Azure to AWS with VPC/subnet CIDR design, EC2 sizing, EFS for file storage, Application Load Balancer for traffic, and CloudWatch for logging." data-pt="Migração de Azure para AWS com desenho de CIDR para VPC/subnets, dimensionamento de EC2, EFS para ficheiros, Application Load Balancer para distribuição de carga e CloudWatch para logging.">Migração de Azure para AWS com desenho de CIDR para VPC/subnets, dimensionamento de EC2, EFS para ficheiros, Application Load Balancer para distribuição de carga e CloudWatch para logging.</p>
+                    <div class="project-tech">
+                        <span>Terraform</span>
+                        <span>AWS</span>
+                        <span>VPC/Subnets</span>
+                        <span>EC2</span>
+                        <span>EFS</span>
+                        <span>ALB</span>
+                        <span>CloudWatch</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Secure, repeatable environments" data-pt="Ambientes seguros e reprodutíveis">Ambientes seguros e reprodutíveis</span>
+                    </div>
+                </div>
+                <div class="project-card" data-project="fintech-aws-iac" data-aos="fade-up" data-aos-delay="700">
+                    <div class="project-header">
+                        <span class="sector-tag fintech">FinTech</span>
+                        <div class="project-title-row">
+                            <i class="fas fa-landmark"></i>
+                            <h3 data-en="FinTech AWS Infrastructure from Scratch" data-pt="Infraestrutura AWS FinTech de Raiz">Infraestrutura AWS FinTech de Raiz</h3>
+                        </div>
+                    </div>
+                    <p data-en="Designed and provisioned AWS landing zones and app stacks using Terraform and AWS CloudFormation following security and compliance best practices." data-pt="Desenhei e provisionei landing zones e stacks de aplicações em AWS com Terraform e AWS CloudFormation, seguindo boas práticas de segurança e compliance.">Desenhei e provisionei landing zones e stacks de aplicações em AWS com Terraform e AWS CloudFormation, seguindo boas práticas de segurança e compliance.</p>
+                    <div class="project-tech">
+                        <span>Terraform</span>
+                        <span>AWS CloudFormation</span>
+                        <span>AWS</span>
+                        <span>Networking</span>
+                    </div>
+                    <div class="project-impact">
+                        <strong data-en="Impact:" data-pt="Impacto:">Impacto:</strong> <span data-en="Standardized IaC, faster onboarding, stronger governance" data-pt="IaC padronizado, onboarding mais rápido e governação reforçada">IaC padronizado, onboarding mais rápido e governação reforçada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" data-en="Let's Connect" data-pt="Fala Comigo">Fala Comigo</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 data-en="Ready to orchestrate something amazing?" data-pt="Pronto para orquestrar algo incrível?">Pronto para orquestrar algo incrível?</h3>
+                    <p data-en="I'm always excited to discuss new opportunities and collaborate on innovative projects." data-pt="Estou sempre entusiasmada para discutir novas oportunidades e colaborar em projetos inovadores.">
+                        Estou sempre entusiasmada para discutir novas oportunidades e colaborar em projetos inovadores.
+                    </p>
+                    <div class="contact-methods">
+                        <a href="https://www.linkedin.com/in/ines-fv-lino/" target="_blank" class="contact-link">
+                            <i class="fab fa-linkedin"></i>
+                            LinkedIn
+                        </a>
+                        <!-- Email removed as requested -->
+                        <a href="https://github.com/ineslino" target="_blank" class="contact-link">
+                            <i class="fab fa-github"></i>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="O Teu Nome" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="O Teu Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="A Tua Mensagem" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            <span data-en="Send Message" data-pt="Enviar Mensagem">Enviar Mensagem</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Inês Lino. <span data-en="Orchestrating digital symphonies, one deployment at a time." data-pt="Orquestrando sinfonias digitais, um deploy de cada vez.">Orquestrando sinfonias digitais, um deploy de cada vez.</span></p>
+                <div class="footer-links">
+                    <a href="#about" data-en="About" data-pt="Sobre">Sobre</a>
+                    <a href="#experience" data-en="Experience" data-pt="Experiência">Experiência</a>
+                    <a href="#skills" data-en="Skills" data-pt="Competências">Competências</a>
+                    <a href="#contact" data-en="Contact" data-pt="Contacto">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Enhanced DevOps Game Modal -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content game-modal">
+            <span class="close">&times;</span>
+            <h2 data-en="🚀 DevOps Challenge" data-pt="🚀 Desafio DevOps">🚀 Desafio DevOps</h2>
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="game-level-info">
+                        <span class="level-label" data-en="Level" data-pt="Nível">Nível</span>
+                        <span class="level-number" id="currentLevel">1</span>
+                        <span class="level-separator">/</span>
+                        <span class="level-total">3</span>
+                    </div>
+                    <div class="game-score">
+                        <span class="score-label" data-en="Score" data-pt="Pontuação">Pontuação</span>
+                        <span class="score-number" id="currentScore">0</span>
+                    </div>
+                </div>
+                
+                <div class="game-instructions">
+                    <p data-en="Drag and drop the steps to build a healthy DevOps pipeline." data-pt="Arrasta e larga os passos para construir um pipeline DevOps saudável.">Arrasta e larga os passos para construir um pipeline DevOps saudável.</p>
+                </div>
+                
+                <div class="game-phase" id="phase1">
+                    <h3 data-en="Phase 1: Order the Pipeline Stages" data-pt="Fase 1: Ordena as Fases do Pipeline">Fase 1: Ordena as Fases do Pipeline</h3>
+                    <div id="pipelineBoard" class="deployment-sequence" style="grid-template-columns: repeat(5, 1fr);">
+                        <div class="step" draggable="true" data-step="build">Build</div>
+                        <div class="step" draggable="true" data-step="test">Test</div>
+                        <div class="step" draggable="true" data-step="security">Security</div>
+                        <div class="step" draggable="true" data-step="deploy">Deploy</div>
+                        <div class="step" draggable="true" data-step="monitor">Monitor</div>
+                    </div>
+                </div>
+                
+                <div class="game-phase hidden" id="phase2">
+                    <h3 data-en="Phase 2: Assign Tasks to Stages" data-pt="Fase 2: Associa Tarefas às Fases">Fase 2: Associa Tarefas às Fases</h3>
+                    <div class="tasks-container">
+                        <div class="tasks-source">
+                            <h4 data-en="Available Tasks" data-pt="Tarefas Disponíveis">Tarefas Disponíveis</h4>
+                            <div id="taskBoard" class="tasks-grid">
+                                <!-- Tasks will be dynamically added here -->
+                            </div>
+                        </div>
+                        <div class="tasks-target">
+                            <h4 data-en="Pipeline Stages" data-pt="Fases do Pipeline">Fases do Pipeline</h4>
+                            <div id="stageTargets" class="stages-grid">
+                                <!-- Stages will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="nextLevel" class="btn btn-secondary hidden" data-en="Next Level" data-pt="Próximo Nível">Próximo Nível</button>
+                    <button id="resetGame" class="btn btn-secondary" data-en="Reset" data-pt="Reiniciar">Reiniciar</button>
+                </div>
+                
+                <div class="game-tips">
+                    <h4>💡 <span data-en="Tips:" data-pt="Dicas:">Dicas:</span></h4>
+                    <ul id="tipsList">
+                        <li data-en="Include Security before Deploy." data-pt="Inclui Security antes de Deploy.">Inclui Security antes de Deploy.</li>
+                        <li data-en="Build → Test → Security → Deploy → Monitor." data-pt="Build → Test → Security → Deploy → Monitor.">Build → Test → Security → Deploy → Monitor.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
