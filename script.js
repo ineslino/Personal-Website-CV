@@ -82,35 +82,89 @@ class CustomScrollAnimations {
     }
 
     animateElement(element) {
-        // Set initial state before animation
-        element.style.opacity = '0';
-        
-        if (element.classList.contains('passion-card') || element.classList.contains('skill-category')) {
-            element.style.transform = 'translateY(30px)';
-            element.style.filter = 'none';
-        } else {
-            element.style.transform = 'translateY(40px) scale(0.95)';
-            element.style.filter = 'blur(2px)';
+        // Skip already animated elements
+        if (this.animatedElements.has(element)) {
+            return;
         }
         
-        // Use requestAnimationFrame for better performance
-        requestAnimationFrame(() => {
-        // Add animation class based on element type
+        // Mark as animated
+        this.animatedElements.add(element);
+        
+        // Determine animation type based on element
+        let animationType = 'fadeInUp';
+        let duration = '0.8s';
+        
         if (element.classList.contains('project-card')) {
             // Skip animation for project cards to prevent overlap
             element.style.opacity = '1';
             element.style.transform = 'none';
-                element.style.filter = 'none';
+            element.style.filter = 'none';
+            return;
         } else if (element.classList.contains('skill-category')) {
-            element.style.animation = 'fadeInScale 0.5s ease forwards';
+            animationType = 'scaleInRotate';
+            duration = '1.0s';
         } else if (element.classList.contains('passion-card')) {
-                element.style.animation = 'slideInUp 0.4s ease forwards';
+            animationType = 'bounceIn';
+            duration = '0.9s';
+        } else if (element.classList.contains('skill-item')) {
+            animationType = 'slideInFromLeft';
+            duration = '0.7s';
+        } else if (element.classList.contains('cert-item')) {
+            animationType = 'slideInFromRight';
+            duration = '0.7s';
+        } else if (element.classList.contains('timeline-item')) {
+            animationType = 'flipIn';
+            duration = '0.8s';
+        } else if (element.classList.contains('tech-item')) {
+            animationType = 'zoomInGlow';
+            duration = '0.6s';
         } else if (element.tagName === 'SECTION') {
-                element.style.animation = 'fadeInUp 0.6s ease forwards';
-        } else {
-                element.style.animation = 'fadeInUp 0.4s ease forwards';
+            animationType = 'slideUpFade';
+            duration = '1.0s';
+        } else if (element.classList.contains('hero-title') || element.classList.contains('hero-subtitle')) {
+            animationType = 'typewriter';
+            duration = '1.2s';
         }
-        });
+        
+        // Apply enhanced animation with better timing and effects
+        element.style.animation = `${animationType} ${duration} cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+        
+        // Add subtle glow effect for certain elements
+        if (element.classList.contains('skill-item') || element.classList.contains('cert-item') || element.classList.contains('tech-item')) {
+            setTimeout(() => {
+                element.style.boxShadow = '0 0 20px rgba(99, 102, 241, 0.3)';
+                setTimeout(() => {
+                    element.style.boxShadow = '';
+                }, 2000);
+            }, 500);
+        }
+        
+        // Add particle effect for special elements
+        if (element.classList.contains('hero-title')) {
+            this.addParticleEffect(element);
+        }
+    }
+    
+    addParticleEffect(element) {
+        const rect = element.getBoundingClientRect();
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.left = rect.left + Math.random() * rect.width + 'px';
+                particle.style.top = rect.top + Math.random() * rect.height + 'px';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = '#6366f1';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                particle.style.animation = 'particleFloat 2s ease-out forwards';
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 2000);
+            }, i * 100);
+        }
     }
 }
 
@@ -187,6 +241,7 @@ const hintBtn = document.getElementById('hintBtn');
 const contactForm = document.getElementById('contactForm');
 const gameModal = document.getElementById('gameModal');
 const closeModal = document.querySelector('.close');
+
 
 // Language Management
 let currentLanguage = localStorage.getItem('language') || 'pt';
@@ -331,7 +386,23 @@ class TechShowcase {
                 this.animateItem(item, false);
                 // Don't hide popup immediately on mouseleave
             });
+            
+            // Add random glitch effect (10% chance)
+            if (Math.random() < 0.1) {
+                this.addGlitchEffect(item);
+            }
         });
+    }
+    
+    addGlitchEffect(item) {
+        setInterval(() => {
+            if (Math.random() < 0.3) { // 30% chance every interval
+                item.style.animation = 'codeGlitch 0.3s ease-in-out';
+                setTimeout(() => {
+                    item.style.animation = '';
+                }, 300);
+            }
+        }, 5000); // Check every 5 seconds
     }
 
     showTechDetails(item) {
@@ -1208,19 +1279,45 @@ class PassionCards {
         
         element.classList.add('sparkling');
         
-        // Store original transform to restore later
+        // Store original styles to restore later
         const originalTransform = element.style.transform;
+        const originalBoxShadow = element.style.boxShadow;
+        
+        // Enhanced sparkle effect with glow
+        element.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.6)';
+        element.style.transform = 'scale(1.1) rotate(5deg)';
+        
+        // Add particle sparkles around the element
+        const rect = element.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'absolute';
+                sparkle.style.left = rect.left + Math.random() * rect.width + 'px';
+                sparkle.style.top = rect.top + Math.random() * rect.height + 'px';
+                sparkle.style.fontSize = '18px';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                sparkle.style.animation = 'particleFloat 2s ease-out forwards';
+                sparkle.style.filter = 'drop-shadow(0 0 6px rgba(255, 215, 0, 0.8))';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 2000);
+            }, i * 100);
+        }
         
         // Use requestAnimationFrame for better performance
         requestAnimationFrame(() => {
-            element.style.animation = 'passionSparkle 1s ease-in-out';
+            element.style.animation = 'glowPulse 1.5s ease-in-out';
         });
         
         setTimeout(() => {
             element.style.animation = '';
-            element.style.transform = originalTransform; // Restore original transform
+            element.style.transform = originalTransform;
+            element.style.boxShadow = originalBoxShadow;
             element.classList.remove('sparkling');
-        }, 1000);
+        }, 1500);
         
         const message = currentLanguage === 'pt' ?
             '✨ Passion Sparkle! Brilho especial! ✨' :
@@ -3936,7 +4033,89 @@ function populateRecruiterSummary() {
         projectsContainer.appendChild(projectItem);
     });
     
-    // Contact section removed - CV download button is now at the top
+    // Populate contact information
+    const contactContainer = document.getElementById('recruiterContact');
+    if (contactContainer) {
+        contactContainer.innerHTML = '';
+        
+        // Create contact items
+        const contactItems = [
+            {
+                icon: 'fab fa-linkedin',
+                text: 'LinkedIn',
+                url: 'https://www.linkedin.com/in/ines-fv-lino/',
+                color: '#0077b5'
+            },
+            {
+                icon: 'fab fa-github',
+                text: 'GitHub',
+                url: 'https://github.com/ineslino',
+                color: '#333'
+            }
+        ];
+        
+        contactItems.forEach(item => {
+            const contactItem = document.createElement('div');
+            contactItem.className = 'contact-item';
+            contactItem.style.display = 'flex';
+            contactItem.style.alignItems = 'center';
+            contactItem.style.gap = '0.75rem';
+            contactItem.style.marginBottom = '1rem';
+            contactItem.style.padding = '0.75rem';
+            contactItem.style.background = 'rgba(255, 255, 255, 0.05)';
+            contactItem.style.borderRadius = '8px';
+            contactItem.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+            contactItem.style.transition = 'all 0.3s ease';
+            
+            // Add hover effect
+            contactItem.addEventListener('mouseenter', () => {
+                contactItem.style.background = 'rgba(255, 255, 255, 0.1)';
+                contactItem.style.transform = 'translateX(5px)';
+            });
+            
+            contactItem.addEventListener('mouseleave', () => {
+                contactItem.style.background = 'rgba(255, 255, 255, 0.05)';
+                contactItem.style.transform = 'translateX(0)';
+            });
+            
+            // Create icon
+            const iconDiv = document.createElement('div');
+            iconDiv.innerHTML = `<i class="${item.icon}" style="color: ${item.color}; font-size: 1.2rem;"></i>`;
+            contactItem.appendChild(iconDiv);
+            
+            // Create text/link
+            if (item.url) {
+                const link = document.createElement('a');
+                link.href = item.url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = item.text;
+                link.style.color = 'white';
+                link.style.textDecoration = 'none';
+                link.style.fontWeight = '500';
+                link.style.flex = '1';
+                
+                link.addEventListener('mouseenter', () => {
+                    link.style.textDecoration = 'underline';
+                });
+                
+                link.addEventListener('mouseleave', () => {
+                    link.style.textDecoration = 'none';
+                });
+                
+                contactItem.appendChild(link);
+            } else {
+                const textDiv = document.createElement('div');
+                textDiv.textContent = item.text;
+                textDiv.style.color = 'white';
+                textDiv.style.fontWeight = '500';
+                textDiv.style.flex = '1';
+                contactItem.appendChild(textDiv);
+            }
+            
+            contactContainer.appendChild(contactItem);
+        });
+    }
     
     // Initialize language for recruiter mode
     updateRecruiterContent(currentLanguage);
@@ -4085,7 +4264,6 @@ function updateRecruiterContent(lang) {
         });
     }
     
-    // Contact links removed - CV download button is now at the top
     
     // Update badge links text
     const badgeLinks = document.querySelectorAll('#recruiterCertifications a[href*="credly"]');
