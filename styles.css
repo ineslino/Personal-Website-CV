@@ -5,13 +5,13 @@ image.png/* Reset and Base Styles */
     box-sizing: border-box;
 }
 
-/* Enhanced smooth scroll with custom easing */
+/* Enhanced smooth scroll with custom easing - Otimizado */
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px; /* Account for fixed navbar */
 }
 
-/* Improved scroll performance */
+/* Improved scroll performance - Otimizado */
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg-primary);
@@ -118,10 +118,10 @@ body {
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
     
-    /* Transitions */
+    /* Transitions - Otimizadas para melhor performance */
     --transition-fast: 0.1s ease;
-    --transition-normal: 0.2s ease;
-    --transition-slow: 0.3s ease;
+    --transition-normal: 0.15s ease; /* Reduzido de 0.2s para 0.15s */
+    --transition-slow: 0.25s ease; /* Reduzido de 0.3s para 0.25s */
 }
 
 /* Light Theme */
@@ -873,6 +873,18 @@ body {
     align-items: center;
 }
 
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        filter: brightness(1);
+    }
+    50% {
+        text-shadow: 0 0 30px rgba(99, 102, 241, 0.8), 0 0 60px rgba(99, 102, 241, 0.4);
+        filter: brightness(1.2);
+    }
+}
+
+/* Garantir que o easter egg fica visível sobre o texto selecionado */
 .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
@@ -881,6 +893,9 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    position: relative;
+    z-index: 10;
+    user-select: none; /* Previne seleção de texto que interfere com o efeito */
 }
 
 .typing-text {
@@ -1013,6 +1028,9 @@ body {
     border-radius: 0.75rem;
     transition: var(--transition-normal);
     cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease, var(--transition-normal);
 }
 
 .tech-item:hover {
@@ -1618,10 +1636,11 @@ body {
 
 .timeline-track {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 0 2rem;
     min-width: max-content;
     align-items: stretch;
+    position: relative;
 }
 
 .timeline-item-horizontal {
@@ -1662,15 +1681,17 @@ body {
     }
 }
 
-.timeline-item-horizontal:not(:last-child)::after {
+/* Linha conectora que passa pelos centros dos marcadores */
+.timeline-track::before {
     content: '';
     position: absolute;
     top: 20px;
-    right: -1rem;
-    width: 2rem;
+    left: 2rem;
+    right: 2rem;
     height: 2px;
     background: var(--gradient-primary);
-    z-index: 1;
+    z-index: 0;
+    border-radius: 1px;
 }
 
 .timeline-marker-horizontal {
@@ -1687,7 +1708,7 @@ body {
     color: white;
     font-size: 1.5rem;
     box-shadow: var(--shadow-lg);
-    z-index: 2;
+    z-index: 3;
 }
 
 .timeline-content-horizontal {
@@ -1858,6 +1879,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .skill-item span {
@@ -3345,7 +3369,7 @@ body.recruiter .recruiter-summary {
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
-    z-index: 5000;
+    z-index: 9999; /* Garantir que fica acima de tudo */
     opacity: 0;
     transform: translateY(-50%) translateX(100%);
     transition: all 0.3s ease;
@@ -3375,7 +3399,7 @@ body.recruiter .recruiter-summary {
     border-radius: 15px;
     font-size: 0.75rem;
     font-weight: 600;
-    z-index: 5000;
+    z-index: 9999; /* Garantir que fica acima de tudo */
     opacity: 0;
     transform: translateX(100%) scale(0.8);
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -3398,7 +3422,7 @@ body.recruiter .recruiter-summary {
 .easter-egg-float {
     position: fixed;
     pointer-events: none;
-    z-index: 4000;
+    z-index: 9999; /* Garantir que fica acima de tudo */
     font-size: 1.5rem;
     animation: floatUp 2s ease-out forwards;
 }
@@ -3412,6 +3436,32 @@ body.recruiter .recruiter-summary {
         opacity: 0;
         transform: translateY(-100px) scale(0.5);
     }
+}
+
+/* Notification System */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid rgba(99, 102, 241, 0.8);
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .notification.success {
@@ -3429,9 +3479,15 @@ body.recruiter .recruiter-summary {
     border-left-color: rgba(245, 158, 11, 0.8);
 }
 
-.notification.info {
-    background: var(--primary-color);
-    border-left-color: rgba(99, 102, 241, 0.8);
+@keyframes slideOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 }
 
 /* Responsive Design */
@@ -3592,11 +3648,11 @@ section:not(.hero),
     transition: none;
 }
 
-/* Skill categories without blur effect */
+/* Skill categories with simple fade effect */
 .skill-category {
     opacity: 0;
-    transform: translateY(30px);
-    transition: none;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 /* Passion cards without blur effect */
@@ -3668,41 +3724,9 @@ section:not(.hero),
     }
 }
 
-@keyframes scaleInRotate {
-    0% {
-        opacity: 0;
-        transform: scale(0.3) rotate(-180deg);
-        filter: blur(4px);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(0.8) rotate(-90deg);
-        filter: blur(2px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-        filter: blur(0);
-    }
-}
+/* Removed complex scaleInRotate animation for simpler effect */
 
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3) translateY(-50px);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.05) translateY(0);
-    }
-    70% {
-        transform: scale(0.95) translateY(0);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
+/* Removed complex bounceIn animation for simpler effect */
 
 @keyframes flipIn {
     0% {
@@ -3857,6 +3881,16 @@ section:not(.hero),
     }
 }
 
+/* Typewriter cursor animation */
+@keyframes blink {
+    0%, 50% {
+        border-color: #6366f1;
+    }
+    51%, 100% {
+        border-color: transparent;
+    }
+}
+
 @keyframes slideInUp {
     0% {
         opacity: 0;
@@ -3962,7 +3996,7 @@ section:not(.hero),
 }
 
 /* Initial state for animated elements */
-section, .skill-category, .cert-card, .pub-card, .passion-card, .stat-card:not(.about .stat-card) {
+section, .cert-card, .pub-card, .passion-card, .stat-card:not(.about .stat-card) {
     opacity: 0;
     transform: translateY(20px);
 }

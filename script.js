@@ -101,14 +101,20 @@ class CustomScrollAnimations {
             element.style.filter = 'none';
             return;
         } else if (element.classList.contains('skill-category')) {
-            animationType = 'scaleInRotate';
-            duration = '1.0s';
+            // Skip complex animation for skill categories - handled by SimpleSkillsAnimation
+            element.style.opacity = '1';
+            element.style.transform = 'none';
+            element.style.filter = 'none';
+            return;
         } else if (element.classList.contains('passion-card')) {
             animationType = 'bounceIn';
             duration = '0.9s';
         } else if (element.classList.contains('skill-item')) {
-            animationType = 'slideInFromLeft';
-            duration = '0.7s';
+            // Skip animation for skill items - handled by SimpleSkillsAnimation
+            element.style.opacity = '1';
+            element.style.transform = 'none';
+            element.style.filter = 'none';
+            return;
         } else if (element.classList.contains('cert-item')) {
             animationType = 'slideInFromRight';
             duration = '0.7s';
@@ -116,8 +122,11 @@ class CustomScrollAnimations {
             animationType = 'flipIn';
             duration = '0.8s';
         } else if (element.classList.contains('tech-item')) {
-            animationType = 'zoomInGlow';
-            duration = '0.6s';
+            // Skip animation for tech items - handled by SimpleSkillsAnimation
+            element.style.opacity = '1';
+            element.style.transform = 'none';
+            element.style.filter = 'none';
+            return;
         } else if (element.tagName === 'SECTION') {
             animationType = 'slideUpFade';
             duration = '1.0s';
@@ -346,7 +355,7 @@ function updateThemeIcon() {
 
 // Enhanced smooth scrolling for navigation links
 function scrollToSection(sectionId) {
-    smoothScrollTo(sectionId, 1000); // 1 second duration for navigation
+    smoothScrollTo(sectionId, 400); // Reduzido de 1000ms para 400ms - mais rápido e responsivo
     
     // Track analytics
     if (typeof trackSectionView === 'function') {
@@ -512,6 +521,103 @@ class SkillBars {
 // Initialize skill bars
 // Moved to initializeAll()
 
+// Simple Skills Animation - Clean Scroll Effect
+class SimpleSkillsAnimation {
+    constructor() {
+        this.skillItems = document.querySelectorAll('.skill-item');
+        this.techItems = document.querySelectorAll('.tech-item');
+        this.skillCategories = document.querySelectorAll('.skill-category');
+        this.hasAnimated = false;
+        this.init();
+    }
+
+    init() {
+        // Tech items aparecem IMEDIATAMENTE no carregamento da página
+        this.animateTechItemsImmediately();
+        
+        // Skill categories e items ainda usam IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !this.hasAnimated) {
+                    this.startSimpleAnimation();
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -20px 0px'
+        });
+
+        const skillsSection = document.querySelector('#skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    }
+
+    animateTechItemsImmediately() {
+        // Anima tech items IMEDIATAMENTE quando a página carrega
+        this.techItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 50);
+            }, index * 100); // Delay pequeno entre cada tech item
+        });
+    }
+
+    startSimpleAnimation() {
+        if (this.hasAnimated) return;
+        this.hasAnimated = true;
+
+        // Simple fade-in animation for skill categories
+        this.skillCategories.forEach((category, index) => {
+            setTimeout(() => {
+                category.style.opacity = '0';
+                category.style.transform = 'translateY(20px)';
+                category.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    category.style.opacity = '1';
+                    category.style.transform = 'translateY(0)';
+                }, 50);
+            }, index * 100);
+        });
+
+        // Simple fade-in for skill items with progress bars
+        setTimeout(() => {
+            this.skillItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(15px)';
+                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                        
+                        // Animate progress bars
+                        const progressBar = item.querySelector('.skill-progress');
+                        if (progressBar) {
+                            const level = progressBar.parentElement.parentElement.getAttribute('data-level');
+                            if (level) {
+                                setTimeout(() => {
+                                    progressBar.style.width = level + '%';
+                                }, 200);
+                            }
+                        }
+                    }, 50);
+                }, index * 80);
+            });
+        }, this.skillCategories.length * 100 + 100);
+        
+        // Tech items removidos daqui - agora aparecem imediatamente no carregamento
+    }
+}
+
 // Counter Animation
 class CounterAnimation {
     constructor() {
@@ -565,6 +671,7 @@ class DevOpsDndGame {
         this.tasks = [];
         this.stages = [];
         this.levelValidated = false; // Track if current level is validated
+        this.hasUserInteracted = false; // Track if user has interacted with tasks
         
         // New tracking system for detailed results
         this.gameResults = {
@@ -588,6 +695,14 @@ class DevOpsDndGame {
         // Shuffle pipeline for level 1
         if (this.currentLevel === 1) {
             this.shufflePipeline();
+            
+            // Mostrar instruções iniciais
+            setTimeout(() => {
+                const msg = currentLanguage === 'pt' ? 
+                    '🎯 Organiza as tarefas na ordem correta: Build → Test → Security → Deploy → Monitor' : 
+                    '🎯 Organize the tasks in the correct order: Build → Test → Security → Deploy → Monitor';
+                showNotification(msg, 'info');
+            }, 500);
         }
     }
 
@@ -716,6 +831,9 @@ class DevOpsDndGame {
                 const aNext = a.nextSibling === b ? a : a.nextSibling;
                 b.parentNode.insertBefore(a, b);
                 b.parentNode.insertBefore(b, aNext);
+                
+                // Marcar que o usuário interagiu
+                this.hasUserInteracted = true;
             });
         });
     }
@@ -830,6 +948,16 @@ class DevOpsDndGame {
     }
 
     nextPhase() {
+        // VALIDAÇÃO: Verifica se o usuário interagiu com as tarefas
+        // Se não há interação, não permite avançar
+        if (!this.hasUserInteracted) {
+            const msg = currentLanguage === 'pt' ? 
+                '⚠️ Tens de organizar as tarefas primeiro! Arrasta as caixas para reorganizar a ordem.' : 
+                '⚠️ You need to organize the tasks first! Drag the boxes to reorganize the order.';
+            showNotification(msg, 'warning');
+            return;
+        }
+        
         // Track Phase 1 results before moving to Phase 2
         this.trackPhase1Answer();
         
@@ -848,7 +976,14 @@ class DevOpsDndGame {
     }
 
     completePhase2() {
-        this.score += 100;
+        // VALIDAÇÃO: Só dá pontos se houver seleções válidas na Fase 2
+        const phase2Tasks = document.querySelectorAll('#phase2 .task-item');
+        const hasSelections = phase2Tasks.length > 0;
+        
+        if (hasSelections) {
+            this.score += 100;
+        }
+        
         this.updateUI();
         
         if (this.currentLevel < this.maxLevel) {
@@ -862,19 +997,39 @@ class DevOpsDndGame {
     }
 
     nextLevel() {
-        // Always allow progression - no validation required
-        // If in phase 1, move to phase 2
+        // VALIDAÇÃO: Só avança se houver seleções válidas
         if (this.currentPhase === 1) {
+            // Validação para Fase 1 - verifica se usuário interagiu
+            if (!this.hasUserInteracted) {
+                const msg = currentLanguage === 'pt' ? 
+                    '⚠️ Tens de organizar as tarefas primeiro! Arrasta as caixas para reorganizar a ordem.' : 
+                    '⚠️ You need to organize the tasks first! Drag the boxes to reorganize the order.';
+                showNotification(msg, 'warning');
+                return;
+            }
+            
             this.nextPhase();
             return;
         }
         
-        // If in phase 2, advance to next level or complete game
+        // VALIDAÇÃO: Só avança se houver seleções válidas na Fase 2
         if (this.currentPhase === 2) {
+            const phase2Tasks = document.querySelectorAll('#phase2 .task-item');
+            const hasSelections = phase2Tasks.length > 0;
+            
+            if (!hasSelections) {
+                const msg = currentLanguage === 'pt' ? 
+                    '⚠️ Tens de configurar o pipeline primeiro! Arrasta as tarefas para os estágios.' : 
+                    '⚠️ You need to configure the pipeline first! Drag the tasks to the stages.';
+                showNotification(msg, 'warning');
+                return;
+            }
+            
             if (this.currentLevel < this.maxLevel) {
                 this.currentLevel++;
                 this.currentPhase = 1;
                 this.levelValidated = false; // Reset validation for new level
+                this.hasUserInteracted = false; // Reset interaction tracking for new level
                 
                 // Reset phases
                 document.getElementById('phase1').classList.remove('hidden');
@@ -1048,11 +1203,24 @@ class DevOpsDndGame {
     }
 
     completeGame() {
-        this.celebrate();
+        // Só celebra se houver pontos reais
+        if (this.score > 0) {
+            this.celebrate();
+        }
+        
         const msg = currentLanguage === 'pt' ? 
-            `🏆 Parabéns! Completaste todos os níveis! Pontuação final: ${this.score}` : 
-            `🏆 Congratulations! You completed all levels! Final score: ${this.score}`;
-        showNotification(msg, 'success');
+            `🏆 Jogo completo! Pontuação final: ${this.score}` : 
+            `🏆 Game completed! Final score: ${this.score}`;
+        
+        // Mostrar mensagem diferente se não ganhou pontos
+        if (this.score === 0) {
+            const zeroMsg = currentLanguage === 'pt' ? 
+                '😅 Completaste o jogo mas não ganhaste pontos. Tenta organizar as tarefas na ordem correta!' : 
+                '😅 You completed the game but scored 0 points. Try organizing the tasks in the correct order!';
+            showNotification(zeroMsg, 'warning');
+        } else {
+            showNotification(msg, 'success');
+        }
         
         // Track analytics
         if (typeof trackGamePlay === 'function') {
@@ -1068,6 +1236,7 @@ class DevOpsDndGame {
         this.currentPhase = 1;
         this.score = 0;
         this.levelValidated = false; // Reset validation
+        this.hasUserInteracted = false; // Reset interaction tracking
         
         // Reset game results tracking
         this.gameResults = {
@@ -1173,7 +1342,6 @@ contactForm.addEventListener('submit', (e) => {
         }, 2000);
     }, 1500);
     
-    console.log('Form data:', data);
 });
 
 // Enhanced Passion Cards with Modal System
@@ -1515,7 +1683,6 @@ function getNumericPx(value, fallback) {
 }
 
 function markTruncatedDescriptions() {
-    console.log('Starting markTruncatedDescriptions');
     
     // First, clean up all existing indicators
     document.querySelectorAll('.read-more-indicator').forEach(indicator => {
@@ -1532,29 +1699,12 @@ function markTruncatedDescriptions() {
     const telecomCard = document.querySelector('[data-project="telecom-apigee"] p');
     const bankingCard = document.querySelector('[data-project="banking-platform"] p');
     
-    console.log('Telecom card found:', !!telecomCard);
-    console.log('Banking card found:', !!bankingCard);
-    
     if (telecomCard) {
-        console.log('Telecom card text:', telecomCard.textContent.substring(0, 50) + '...');
-        console.log('Telecom card computed styles:', {
-            display: getComputedStyle(telecomCard).display,
-            webkitLineClamp: getComputedStyle(telecomCard).webkitLineClamp,
-            overflow: getComputedStyle(telecomCard).overflow
-        });
-        
         telecomCard.classList.add('truncated');
         telecomCard.setAttribute('data-read-more', '… Saber mais');
     }
     
     if (bankingCard) {
-        console.log('Banking card text:', bankingCard.textContent.substring(0, 50) + '...');
-        console.log('Banking card computed styles:', {
-            display: getComputedStyle(bankingCard).display,
-            webkitLineClamp: getComputedStyle(bankingCard).webkitLineClamp,
-            overflow: getComputedStyle(bankingCard).overflow
-        });
-        
         bankingCard.classList.add('truncated');
         bankingCard.setAttribute('data-read-more', '… Saber mais');
     }
@@ -1755,6 +1905,11 @@ function showNotification(message, type = 'info', isEasterEgg = false) {
     notification.textContent = message;
     
     document.body.appendChild(notification);
+    
+    // Trigger animation to show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
     
     setTimeout(() => {
         notification.style.animation = 'slideOutRight 0.3s ease';
@@ -2075,28 +2230,6 @@ class EasterEggsSystem {
         this.gardenSequence = ['KeyG','KeyA','KeyR','KeyD','KeyE','KeyN'];
         this.apigeeSequence = ['KeyA','KeyP','KeyI','KeyG','KeyE','KeyE'];
         
-        console.log('🎯 EasterEggsSystem initialized');
-        console.log('🎮 Available Easter Eggs:');
-        console.log('  🎵 Konami Code (↑↑↓↓←→←→BA)');
-        console.log('  🚀 DevOps Code (DEVOPS)');
-        console.log('  🎵 Music Code (MUSIC)');
-        console.log('  🍳 Cooking Code (COOK)');
-        console.log('  🎮 Gaming Code (GAME)');
-        console.log('  ⚛️ React Code (REACT)');
-        console.log('  🐳 Docker Code (DOCKER)');
-        console.log('  ☸️ Kubernetes Code (KUBE)');
-        console.log('  ☁️ AWS Code (AWS)');
-        console.log('  📝 Git Code (GIT)');
-        console.log('  🧱 Lego Code (LEGO)');
-        console.log('  🎬 Cinema Code (MOVIE)');
-        console.log('  🏄 Surf Code (SURF)');
-        console.log('  🌱 Garden Code (GARDEN)');
-        console.log('  🌧️ Apigee Code (APIGEE)');
-        console.log('  🎯 Click logo for spin effect');
-        console.log('  ✨ Click title for glow effect');
-        console.log('  🎬 Click movie quotes to cycle');
-        console.log('  🎵 Hover tech items for glitch');
-        console.log('  ✨ Hover passion cards for sparkle');
         this.init();
     }
 
@@ -2128,16 +2261,13 @@ class EasterEggsSystem {
 
     bindKonamiCode() {
         document.addEventListener('keydown', (e) => {
-            console.log('Key pressed:', e.code); // Debug log
             this.konamiCode.push(e.code);
             if (this.konamiCode.length > this.konamiSequence.length) {
                 this.konamiCode.shift();
             }
             
-            console.log('Konami sequence:', this.konamiCode.join(',')); // Debug log
             
             if (this.konamiCode.join(',') === this.konamiSequence.join(',')) {
-                console.log('Konami Code activated!'); // Debug log
                 this.triggerRainbowEffect();
                 const message = currentLanguage === 'pt' ?
                     '🎵 Konami Code Ativado! Encontraste o segredo musical! 🎵' :
@@ -2150,16 +2280,12 @@ class EasterEggsSystem {
 
     bindDevOpsCode() {
         document.addEventListener('keydown', (e) => {
-            console.log('DevOps key pressed:', e.code);
             this.devOpsCode.push(e.code);
             if (this.devOpsCode.length > this.devOpsSequence.length) {
                 this.devOpsCode.shift();
             }
             
-            console.log('DevOps sequence:', this.devOpsCode.join(','));
-            
             if (this.devOpsCode.join(',') === this.devOpsSequence.join(',')) {
-                console.log('DevOps Code activated!');
                 this.triggerDevOpsEffect();
                 const message = currentLanguage === 'pt' ?
                     '🚀 Código DevOps Ativado! Pipeline em ação! 🚀' :
@@ -2172,16 +2298,12 @@ class EasterEggsSystem {
 
     bindMusicCode() {
         document.addEventListener('keydown', (e) => {
-            console.log('Music key pressed:', e.code);
             this.musicCode.push(e.code);
             if (this.musicCode.length > this.musicSequence.length) {
                 this.musicCode.shift();
             }
             
-            console.log('Music sequence:', this.musicCode.join(','));
-            
             if (this.musicCode.join(',') === this.musicSequence.join(',')) {
-                console.log('Music Code activated!');
                 this.triggerMusicEffect();
                 const message = currentLanguage === 'pt' ?
                     '🎵 Código Musical Ativado! Vinis a girar! 🎵' :
@@ -2194,16 +2316,12 @@ class EasterEggsSystem {
 
     bindCookingCode() {
         document.addEventListener('keydown', (e) => {
-            console.log('Cooking key pressed:', e.code);
             this.cookingCode.push(e.code);
             if (this.cookingCode.length > this.cookingSequence.length) {
                 this.cookingCode.shift();
             }
             
-            console.log('Cooking sequence:', this.cookingCode.join(','));
-            
             if (this.cookingCode.join(',') === this.cookingSequence.join(',')) {
-                console.log('Cooking Code activated!');
                 this.triggerCookingEffect();
                 const message = currentLanguage === 'pt' ?
                     '🍳 Código Culinário Ativado! Magia na cozinha! 🍳' :
@@ -2222,10 +2340,7 @@ class EasterEggsSystem {
                 this.gamingCode.shift();
             }
             
-            console.log('Gaming sequence:', this.gamingCode.join(','));
-            
             if (this.gamingCode.join(',') === this.gamingSequence.join(',')) {
-                console.log('Gaming Code activated!');
                 this.triggerGamingEffect();
                 const message = currentLanguage === 'pt' ?
                     '🎮 Código Gaming Ativado! Level up! 🎮' :
@@ -2246,7 +2361,6 @@ class EasterEggsSystem {
             }
             
             if (this.reactCode.join(',') === this.reactSequence.join(',')) {
-                console.log('React Code activated!');
                 this.triggerReactEffect();
                 const message = currentLanguage === 'pt' ?
                     '⚛️ React Ativado! Componentes a renderizar! ⚛️' :
@@ -2266,7 +2380,6 @@ class EasterEggsSystem {
             }
             
             if (this.dockerCode.join(',') === this.dockerSequence.join(',')) {
-                console.log('Docker Code activated!');
                 this.triggerDockerEffect();
                 const message = currentLanguage === 'pt' ?
                     '🐳 Docker Ativado! Containers a navegar! 🐳' :
@@ -2286,7 +2399,6 @@ class EasterEggsSystem {
             }
             
             if (this.kubernetesCode.join(',') === this.kubernetesSequence.join(',')) {
-                console.log('Kubernetes Code activated!');
                 this.triggerKubernetesEffect();
                 const message = currentLanguage === 'pt' ?
                     '☸️ Kubernetes Ativado! Pods a escalar! ☸️' :
@@ -2306,7 +2418,6 @@ class EasterEggsSystem {
             }
             
             if (this.awsCode.join(',') === this.awsSequence.join(',')) {
-                console.log('AWS Code activated!');
                 this.triggerAWSEffect();
                 const message = currentLanguage === 'pt' ?
                     '☁️ AWS Ativado! Cloud computing! ☁️' :
@@ -2326,7 +2437,6 @@ class EasterEggsSystem {
             }
             
             if (this.gitCode.join(',') === this.gitSequence.join(',')) {
-                console.log('Git Code activated!');
                 this.triggerGitEffect();
                 const message = currentLanguage === 'pt' ?
                     '📝 Git Ativado! Commits a voar! 📝' :
@@ -2346,7 +2456,6 @@ class EasterEggsSystem {
             }
             
             if (this.legoCode.join(',') === this.legoSequence.join(',')) {
-                console.log('Lego Code activated!');
                 this.triggerLegoEffect();
                 const message = currentLanguage === 'pt' ?
                     '🧱 Lego Ativado! Peças a construir! 🧱' :
@@ -2366,7 +2475,6 @@ class EasterEggsSystem {
             }
             
             if (this.cinemaCode.join(',') === this.cinemaSequence.join(',')) {
-                console.log('Cinema Code activated!');
                 this.triggerCinemaEffect();
                 const message = currentLanguage === 'pt' ?
                     '🎬 Cinema Ativado! Filmes a projetar! 🎬' :
@@ -2382,7 +2490,6 @@ class EasterEggsSystem {
             this.surfCode.push(e.code);
             if (this.surfCode.length > this.surfSequence.length) this.surfCode.shift();
             if (this.surfCode.join(',') === this.surfSequence.join(',')) {
-                console.log('Surf Code activated!');
                 this.triggerSurfMode();
                 showEasterEggIndicator('Surf Mode!', 'corner');
                 this.surfCode = [];
@@ -2394,7 +2501,6 @@ class EasterEggsSystem {
             this.gardenCode.push(e.code);
             if (this.gardenCode.length > this.gardenSequence.length) this.gardenCode.shift();
             if (this.gardenCode.join(',') === this.gardenSequence.join(',')) {
-                console.log('Garden Code activated!');
                 this.triggerGardenBloom();
                 showEasterEggIndicator('Garden Bloom!', 'corner');
                 this.gardenCode = [];
@@ -2406,7 +2512,6 @@ class EasterEggsSystem {
             this.apigeeCode.push(e.code);
             if (this.apigeeCode.length > this.apigeeSequence.length) this.apigeeCode.shift();
             if (this.apigeeCode.join(',') === this.apigeeSequence.join(',')) {
-                console.log('Apigee Code activated!');
                 this.triggerApigeeRain();
                 showEasterEggIndicator('Apigee Rain!', 'corner');
                 this.apigeeCode = [];
@@ -2503,7 +2608,6 @@ Experimenta os códigos secretos para surpresas especiais!
         
         // Add test function to window for debugging
         window.testEasterEggs = () => {
-            console.log('🧪 Testing all easter eggs...');
             this.triggerDevOpsEffect();
             setTimeout(() => this.triggerMusicEffect(), 1000);
             setTimeout(() => this.triggerCookingEffect(), 2000);
@@ -2519,7 +2623,6 @@ Experimenta os códigos secretos para surpresas especiais!
             setTimeout(() => this.triggerLegoEffect(), 10000);
             setTimeout(() => this.triggerCinemaEffect(), 11000);
             
-            console.log('✅ All easter eggs tested!');
         };
     }
 
@@ -3141,6 +3244,7 @@ function initializeAll() {
         new CustomScrollAnimations();
         new TechShowcase();
         new SkillBars();
+        new SimpleSkillsAnimation();
         new CounterAnimation();
         new PassionCards();
         new MovieQuotesAnimation();
@@ -3356,6 +3460,11 @@ function setupRecruiterMode() {
     function apply(v) { 
         document.body.classList.toggle('recruiter', v); 
         btn.setAttribute('aria-pressed', String(v));
+        
+        // Se ativando recruiter mode, sempre ir para o topo da página
+        if (v) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         
         // Add/remove banner
         const existingBanner = document.querySelector('.recruiter-banner');
@@ -3632,9 +3741,6 @@ function populateRecruiterSummary() {
         if (originalSkill && originalSkill.hasAttribute('data-en') && originalSkill.hasAttribute('data-pt')) {
             skillTag.setAttribute('data-en', originalSkill.getAttribute('data-en'));
             skillTag.setAttribute('data-pt', originalSkill.getAttribute('data-pt'));
-            console.log('Added translation attributes to technical skill:', skill, 'en:', originalSkill.getAttribute('data-en'), 'pt:', originalSkill.getAttribute('data-pt'));
-        } else {
-            console.log('No translation attributes found for technical skill:', skill);
         }
         
         skillsContainer.appendChild(skillTag);
@@ -3661,9 +3767,6 @@ function populateRecruiterSummary() {
         if (chip.hasAttribute('data-en') && chip.hasAttribute('data-pt')) {
             skillTag.setAttribute('data-en', chip.getAttribute('data-en'));
             skillTag.setAttribute('data-pt', chip.getAttribute('data-pt'));
-            console.log('Added translation attributes to soft skill:', chip.textContent.trim(), 'en:', chip.getAttribute('data-en'), 'pt:', chip.getAttribute('data-pt'));
-        } else {
-            console.log('No translation attributes found for soft skill:', chip.textContent.trim());
         }
         
         softSkillsDiv.appendChild(skillTag);
@@ -3693,9 +3796,6 @@ function populateRecruiterSummary() {
         if (originalSkill && originalSkill.hasAttribute('data-en') && originalSkill.hasAttribute('data-pt')) {
             skillTag.setAttribute('data-en', originalSkill.getAttribute('data-en'));
             skillTag.setAttribute('data-pt', originalSkill.getAttribute('data-pt'));
-            console.log('Added translation attributes to improvement skill:', skill, 'en:', originalSkill.getAttribute('data-en'), 'pt:', originalSkill.getAttribute('data-pt'));
-        } else {
-            console.log('No translation attributes found for improvement skill:', skill);
         }
         
         improvementDiv.appendChild(skillTag);
@@ -3798,7 +3898,6 @@ function populateRecruiterSummary() {
     const timelineItems = document.querySelectorAll('.timeline-item-horizontal');
     expContainer.innerHTML = '';
     
-    console.log('Found timeline items:', timelineItems.length); // Debug log
     
            // Define experience data with bilingual information
            const experienceData = [
@@ -4123,28 +4222,22 @@ function populateRecruiterSummary() {
 
 // Direct function for recruiter language toggle (called by onclick)
 function toggleRecruiterLanguageDirect() {
-    console.log('=== RECRUITER LANGUAGE TOGGLE START ===');
-    console.log('Initial currentLanguage:', currentLanguage);
     
     // Toggle language
     currentLanguage = currentLanguage === 'pt' ? 'en' : 'pt';
     localStorage.setItem('language', currentLanguage);
     
-    console.log('New currentLanguage:', currentLanguage);
     
     // CRITICAL: Update button text FIRST, before any other operations
     const button = document.getElementById('recruiterLangText');
-    console.log('Button element:', button);
     
     if (button) {
         const newText = currentLanguage.toUpperCase();
-        console.log('Setting button text to:', newText);
         
         // Force immediate update
         button.textContent = newText;
         button.innerHTML = newText;
         
-        console.log('Button text after setting:', button.textContent);
     }
     
     // Update recruiter content (this might fail, but button is already updated)
@@ -4155,25 +4248,18 @@ function toggleRecruiterLanguageDirect() {
         // Button is already updated, so we're good
     }
     
-    console.log('=== RECRUITER LANGUAGE TOGGLE END ===');
 }
 
 // Initialize recruiter language button
 function initRecruiterLanguageButton() {
-    console.log('=== INIT RECRUITER LANGUAGE BUTTON ===');
-    console.log('currentLanguage at init:', currentLanguage);
     
     const langText = document.getElementById('recruiterLangText');
-    console.log('Button element at init:', langText);
     
     if (langText) {
         const initialText = currentLanguage.toUpperCase();
-        console.log('Setting initial button text to:', initialText);
         langText.textContent = initialText;
-        console.log('Button text after init:', langText.textContent);
     }
     
-    console.log('=== INIT RECRUITER LANGUAGE BUTTON END ===');
 }
 
 // Recruiter Mode Language Toggle - Simplified to use main updateLanguage function
@@ -4247,19 +4333,15 @@ function updateRecruiterContent(lang) {
     if (recruiterSkillsContainer) {
         // Update all skill tags in recruiter mode
         const skillTags = recruiterSkillsContainer.querySelectorAll('.recruiter-skill[data-en][data-pt]');
-        console.log('Found recruiter skill tags:', skillTags.length);
         skillTags.forEach(tag => {
-            console.log('Translating tag:', tag.textContent, 'to:', tag.dataset[lang]);
             tag.textContent = tag.dataset[lang];
         });
     }
     
     // Update areas of development tags - they are added after the skills container
     const allRecruiterSkills = recruiterSkillsContainer?.parentNode?.querySelectorAll('.recruiter-skill[data-en][data-pt]');
-    console.log('Found all recruiter skills:', allRecruiterSkills?.length);
     if (allRecruiterSkills) {
         allRecruiterSkills.forEach(tag => {
-            console.log('Translating all recruiter tag:', tag.textContent, 'to:', tag.dataset[lang]);
             tag.textContent = tag.dataset[lang];
         });
     }
