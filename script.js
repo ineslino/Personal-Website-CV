@@ -1,40 +1,22 @@
 // Enhanced JavaScript for Inês Lino's Portfolio Website
 
 // Enhanced smooth scroll function with better easing
-function smoothScrollTo(targetId, duration = 1000) {
+function smoothScrollTo(targetId, duration = 300) {
     const target = document.getElementById(targetId);
     if (!target) return;
     
-    const startPosition = window.pageYOffset;
-    const targetPosition = target.offsetTop - 80; // Account for navbar height
-    const distance = targetPosition - startPosition;
-    const startTime = performance.now();
-    
-    // Improved easing function for smoother animation
-    function easeInOutQuart(t) {
-        return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
-    }
-    
-    function animation(currentTime) {
-        const timeElapsed = currentTime - startTime;
-        const progress = Math.min(timeElapsed / duration, 1);
-        const ease = easeInOutQuart(progress);
-        
-        window.scrollTo(0, startPosition + distance * ease);
-        
-        if (progress < 1) {
-            requestAnimationFrame(animation);
-        }
-    }
-    
-    requestAnimationFrame(animation);
+    // Use native smooth scroll for better performance
+    target.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
 }
 
 // Custom Scroll Animation System (replacing AOS)
 class CustomScrollAnimations {
     constructor() {
         this.elements = [];
-        this.animatedElements = new Set(); // Track which elements have been animated
+        this.animatedElements = new Set(); // Track currently visible elements
         this.init();
     }
 
@@ -44,21 +26,27 @@ class CustomScrollAnimations {
             'section, .project-card, .skill-category, .cert-card, .pub-card, .passion-card, .stat-card'
         );
 
-        // Create intersection observer that doesn't unobserve
+        // Create intersection observer that toggles visibility (fade in/out)
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !this.animatedElements.has(entry.target)) {
-                    this.animateElement(entry.target);
-                    this.animatedElements.add(entry.target);
-                } else if (!entry.isIntersecting && this.animatedElements.has(entry.target)) {
-                    // Reset animation when element goes out of view
-                    this.resetElement(entry.target);
-                    this.animatedElements.delete(entry.target);
+                const el = entry.target;
+                if (entry.isIntersecting) {
+                    // Element enters viewport → fade in
+                    if (!this.animatedElements.has(el)) {
+                        this.animatedElements.add(el);
+                        requestAnimationFrame(() => this.animateIn(el));
+                    }
+                } else {
+                    // Element leaves viewport → fade out
+                    if (this.animatedElements.has(el)) {
+                        this.animatedElements.delete(el);
+                        requestAnimationFrame(() => this.animateOut(el));
+                    }
                 }
             });
         }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px' // Start animation earlier
+            threshold: 0.25, // trigger when ~25% visível
+            rootMargin: '0px 0px -10% 0px'
         });
 
         // Observe all elements
@@ -67,91 +55,19 @@ class CustomScrollAnimations {
         });
     }
 
-    resetElement(element) {
-        // Reset element to initial state for re-animation
+    resetElement(element) {}
+
+    animateIn(element) {
+        element.classList.add('fade-in-up');
+        // remove any inline animation overrides to let CSS transitions work
         element.style.animation = '';
-        element.style.opacity = '0';
-        
-        if (element.classList.contains('passion-card') || element.classList.contains('skill-category')) {
-            element.style.transform = 'translateY(30px)';
-            element.style.filter = 'none';
-        } else {
-            element.style.transform = 'translateY(40px) scale(0.95)';
-            element.style.filter = 'blur(2px)';
-        }
+        element.style.boxShadow = '';
     }
 
-    animateElement(element) {
-        // Skip already animated elements
-        if (this.animatedElements.has(element)) {
-            return;
-        }
-        
-        // Mark as animated
-        this.animatedElements.add(element);
-        
-        // Determine animation type based on element
-        let animationType = 'fadeInUp';
-        let duration = '0.8s';
-        
-        if (element.classList.contains('project-card')) {
-            // Skip animation for project cards to prevent overlap
-            element.style.opacity = '1';
-            element.style.transform = 'none';
-            element.style.filter = 'none';
-            return;
-        } else if (element.classList.contains('skill-category')) {
-            // Skip complex animation for skill categories - handled by SimpleSkillsAnimation
-            element.style.opacity = '1';
-            element.style.transform = 'none';
-            element.style.filter = 'none';
-            return;
-        } else if (element.classList.contains('passion-card')) {
-            animationType = 'bounceIn';
-            duration = '0.9s';
-        } else if (element.classList.contains('skill-item')) {
-            // Skip animation for skill items - handled by SimpleSkillsAnimation
-            element.style.opacity = '1';
-            element.style.transform = 'none';
-            element.style.filter = 'none';
-            return;
-        } else if (element.classList.contains('cert-item')) {
-            animationType = 'slideInFromRight';
-            duration = '0.7s';
-        } else if (element.classList.contains('timeline-item')) {
-            animationType = 'flipIn';
-            duration = '0.8s';
-        } else if (element.classList.contains('tech-item')) {
-            // Skip animation for tech items - handled by SimpleSkillsAnimation
-            element.style.opacity = '1';
-            element.style.transform = 'none';
-            element.style.filter = 'none';
-            return;
-        } else if (element.tagName === 'SECTION') {
-            animationType = 'slideUpFade';
-            duration = '1.0s';
-        } else if (element.classList.contains('hero-title') || element.classList.contains('hero-subtitle')) {
-            animationType = 'typewriter';
-            duration = '1.2s';
-        }
-        
-        // Apply enhanced animation with better timing and effects
-        element.style.animation = `${animationType} ${duration} cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
-        
-        // Add subtle glow effect for certain elements
-        if (element.classList.contains('skill-item') || element.classList.contains('cert-item') || element.classList.contains('tech-item')) {
-            setTimeout(() => {
-                element.style.boxShadow = '0 0 20px rgba(99, 102, 241, 0.3)';
-                setTimeout(() => {
-                    element.style.boxShadow = '';
-                }, 2000);
-            }, 500);
-        }
-        
-        // Add particle effect for special elements
-        if (element.classList.contains('hero-title')) {
-            this.addParticleEffect(element);
-        }
+    animateOut(element) {
+        element.classList.remove('fade-in-up');
+        // Keep transitions CSS-only; no inline styles here
+        element.style.animation = '';
     }
     
     addParticleEffect(element) {
@@ -458,6 +374,20 @@ class TechShowcase {
                     'GitOps tool para deployment automatizado. Experiência em integração com GitLab, GitHub.' :
                     'GitOps tool for automated deployment. Experience integrating with GitLab, GitHub.',
                 level: 'Advanced'
+            },
+            docker: {
+                name: 'Docker',
+                description: currentLanguage === 'pt' ?
+                    'Containerização e build de imagens. Experiência com Dockerfiles multi‑stage, scanning e supply chain.' :
+                    'Containerization and image builds. Experience with multi‑stage Dockerfiles, image scanning and supply chain.',
+                level: 'Advanced'
+            },
+            kibana: {
+                name: 'Kibana',
+                description: currentLanguage === 'pt' ?
+                    'Observabilidade com Elastic Stack. Dashboards, visualizações e exploração de logs para troubleshooting.' :
+                    'Observability with Elastic Stack. Dashboards, visualizations and log exploration for troubleshooting.',
+                level: 'Intermediate'
             }
         };
 
@@ -557,14 +487,8 @@ class SimpleSkillsAnimation {
         // Anima tech items IMEDIATAMENTE quando a página carrega
         this.techItems.forEach((item, index) => {
             setTimeout(() => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(10px)';
-                item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, 50);
+                // Use CSS classes instead of direct style manipulation
+                item.classList.add('fade-in-up');
             }, index * 100); // Delay pequeno entre cada tech item
         });
     }
@@ -576,14 +500,8 @@ class SimpleSkillsAnimation {
         // Simple fade-in animation for skill categories
         this.skillCategories.forEach((category, index) => {
             setTimeout(() => {
-                category.style.opacity = '0';
-                category.style.transform = 'translateY(20px)';
-                category.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                
-                setTimeout(() => {
-                    category.style.opacity = '1';
-                    category.style.transform = 'translateY(0)';
-                }, 50);
+                // Use CSS classes instead of direct style manipulation
+                category.classList.add('fade-in-up');
             }, index * 100);
         });
 
@@ -591,25 +509,19 @@ class SimpleSkillsAnimation {
         setTimeout(() => {
             this.skillItems.forEach((item, index) => {
                 setTimeout(() => {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(15px)';
-                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    // Use CSS classes instead of direct style manipulation
+                    item.classList.add('fade-in-up');
                     
-                    setTimeout(() => {
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
-                        
-                        // Animate progress bars
-                        const progressBar = item.querySelector('.skill-progress');
-                        if (progressBar) {
-                            const level = progressBar.parentElement.parentElement.getAttribute('data-level');
-                            if (level) {
-                                setTimeout(() => {
-                                    progressBar.style.width = level + '%';
-                                }, 200);
-                            }
+                    // Animate progress bars
+                    const progressBar = item.querySelector('.skill-progress');
+                    if (progressBar) {
+                        const level = progressBar.parentElement.parentElement.getAttribute('data-level');
+                        if (level) {
+                            setTimeout(() => {
+                                progressBar.style.width = level + '%';
+                            }, 200);
                         }
-                    }, 50);
+                    }
                 }, index * 80);
             });
         }, this.skillCategories.length * 100 + 100);
@@ -1490,7 +1402,6 @@ class PassionCards {
         const message = currentLanguage === 'pt' ?
             '✨ Passion Sparkle! Brilho especial! ✨' :
             '✨ Passion Sparkle! Special shine! ✨';
-        showNotification(message, 'info');
     }
 }
 
@@ -1851,7 +1762,6 @@ class MovieEffects {
                 };
                 
                 const message = messages[effectName][currentLanguage];
-                showNotification(message, 'info');
             }
         }
     }
@@ -1960,19 +1870,19 @@ function createFloatingEmoji(emoji, x, y) {
     }, 2000);
 }
 
-// Scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Scroll animations - REMOVED (handled by CustomScrollAnimations)
+// const observerOptions = {
+//     threshold: 0.1,
+//     rootMargin: '0px 0px -50px 0px'
+// };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
-        }
-    });
-}, observerOptions);
+// const observer = new IntersectionObserver((entries) => {
+//     entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//             entry.target.classList.add('fade-in-up');
+//         }
+//     });
+// }, observerOptions);
 
 // Observe all sections
 // Moved to initializeAll()
@@ -2269,10 +2179,6 @@ class EasterEggsSystem {
             
             if (this.konamiCode.join(',') === this.konamiSequence.join(',')) {
                 this.triggerRainbowEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🎵 Konami Code Ativado! Encontraste o segredo musical! 🎵' :
-                    '🎵 Konami Code Activated! You found the musical secret! 🎵';
-                showEasterEggIndicator('Konami Code!', 'corner');
                 this.konamiCode = [];
             }
         });
@@ -2287,10 +2193,6 @@ class EasterEggsSystem {
             
             if (this.devOpsCode.join(',') === this.devOpsSequence.join(',')) {
                 this.triggerDevOpsEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🚀 Código DevOps Ativado! Pipeline em ação! 🚀' :
-                    '🚀 DevOps Code Activated! Pipeline in action! 🚀';
-                showEasterEggIndicator('DevOps Code!', 'corner');
                 this.devOpsCode = [];
             }
         });
@@ -2305,10 +2207,6 @@ class EasterEggsSystem {
             
             if (this.musicCode.join(',') === this.musicSequence.join(',')) {
                 this.triggerMusicEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🎵 Código Musical Ativado! Vinis a girar! 🎵' :
-                    '🎵 Music Code Activated! Vinyls spinning! 🎵';
-                showEasterEggIndicator('Music Code!', 'corner');
                 this.musicCode = [];
             }
         });
@@ -2323,10 +2221,6 @@ class EasterEggsSystem {
             
             if (this.cookingCode.join(',') === this.cookingSequence.join(',')) {
                 this.triggerCookingEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🍳 Código Culinário Ativado! Magia na cozinha! 🍳' :
-                    '🍳 Cooking Code Activated! Kitchen magic! 🍳';
-                showEasterEggIndicator('Cooking Code!', 'corner');
                 this.cookingCode = [];
             }
         });
@@ -2342,10 +2236,6 @@ class EasterEggsSystem {
             
             if (this.gamingCode.join(',') === this.gamingSequence.join(',')) {
                 this.triggerGamingEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🎮 Código Gaming Ativado! Level up! 🎮' :
-                    '🎮 Gaming Code Activated! Level up! 🎮';
-                showEasterEggIndicator('Gaming Code!', 'corner');
                 this.gamingCode = [];
             }
         });
@@ -2362,10 +2252,6 @@ class EasterEggsSystem {
             
             if (this.reactCode.join(',') === this.reactSequence.join(',')) {
                 this.triggerReactEffect();
-                const message = currentLanguage === 'pt' ?
-                    '⚛️ React Ativado! Componentes a renderizar! ⚛️' :
-                    '⚛️ React Activated! Components rendering! ⚛️';
-                showEasterEggIndicator('React Code!', 'corner');
                 this.reactCode = [];
             }
         });
@@ -2381,10 +2267,6 @@ class EasterEggsSystem {
             
             if (this.dockerCode.join(',') === this.dockerSequence.join(',')) {
                 this.triggerDockerEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🐳 Docker Ativado! Containers a navegar! 🐳' :
-                    '🐳 Docker Activated! Containers sailing! 🐳';
-                showEasterEggIndicator('Docker Code!', 'corner');
                 this.dockerCode = [];
             }
         });
@@ -2400,10 +2282,6 @@ class EasterEggsSystem {
             
             if (this.kubernetesCode.join(',') === this.kubernetesSequence.join(',')) {
                 this.triggerKubernetesEffect();
-                const message = currentLanguage === 'pt' ?
-                    '☸️ Kubernetes Ativado! Pods a escalar! ☸️' :
-                    '☸️ Kubernetes Activated! Pods scaling! ☸️';
-                showEasterEggIndicator('Kubernetes Code!', 'corner');
                 this.kubernetesCode = [];
             }
         });
@@ -2419,10 +2297,6 @@ class EasterEggsSystem {
             
             if (this.awsCode.join(',') === this.awsSequence.join(',')) {
                 this.triggerAWSEffect();
-                const message = currentLanguage === 'pt' ?
-                    '☁️ AWS Ativado! Cloud computing! ☁️' :
-                    '☁️ AWS Activated! Cloud computing! ☁️';
-                showEasterEggIndicator('AWS Code!', 'corner');
                 this.awsCode = [];
             }
         });
@@ -2438,10 +2312,6 @@ class EasterEggsSystem {
             
             if (this.gitCode.join(',') === this.gitSequence.join(',')) {
                 this.triggerGitEffect();
-                const message = currentLanguage === 'pt' ?
-                    '📝 Git Ativado! Commits a voar! 📝' :
-                    '📝 Git Activated! Commits flying! 📝';
-                showEasterEggIndicator('Git Code!', 'corner');
                 this.gitCode = [];
             }
         });
@@ -2457,10 +2327,6 @@ class EasterEggsSystem {
             
             if (this.legoCode.join(',') === this.legoSequence.join(',')) {
                 this.triggerLegoEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🧱 Lego Ativado! Peças a construir! 🧱' :
-                    '🧱 Lego Activated! Building blocks! 🧱';
-                showEasterEggIndicator('Lego Code!', 'corner');
                 this.legoCode = [];
             }
         });
@@ -2476,10 +2342,6 @@ class EasterEggsSystem {
             
             if (this.cinemaCode.join(',') === this.cinemaSequence.join(',')) {
                 this.triggerCinemaEffect();
-                const message = currentLanguage === 'pt' ?
-                    '🎬 Cinema Ativado! Filmes a projetar! 🎬' :
-                    '🎬 Cinema Activated! Movies projecting! 🎬';
-                showEasterEggIndicator('Cinema Code!', 'corner');
                 this.cinemaCode = [];
             }
         });
@@ -2491,7 +2353,6 @@ class EasterEggsSystem {
             if (this.surfCode.length > this.surfSequence.length) this.surfCode.shift();
             if (this.surfCode.join(',') === this.surfSequence.join(',')) {
                 this.triggerSurfMode();
-                showEasterEggIndicator('Surf Mode!', 'corner');
                 this.surfCode = [];
             }
         });
@@ -2502,7 +2363,6 @@ class EasterEggsSystem {
             if (this.gardenCode.length > this.gardenSequence.length) this.gardenCode.shift();
             if (this.gardenCode.join(',') === this.gardenSequence.join(',')) {
                 this.triggerGardenBloom();
-                showEasterEggIndicator('Garden Bloom!', 'corner');
                 this.gardenCode = [];
             }
         });
@@ -2513,7 +2373,6 @@ class EasterEggsSystem {
             if (this.apigeeCode.length > this.apigeeSequence.length) this.apigeeCode.shift();
             if (this.apigeeCode.join(',') === this.apigeeSequence.join(',')) {
                 this.triggerApigeeRain();
-                showEasterEggIndicator('Apigee Rain!', 'corner');
                 this.apigeeCode = [];
             }
         });
@@ -3116,7 +2975,6 @@ Experimenta os códigos secretos para surpresas especiais!
             logo.style.animation = '';
         }, 1000);
         
-        showEasterEggIndicator('Logo Master!', 'corner');
         createFloatingEmoji('🎯', event.clientX, event.clientY);
     }
 
@@ -3127,7 +2985,6 @@ Experimenta os códigos secretos para surpresas especiais!
             title.style.animation = '';
         }, 2000);
         
-        showEasterEggIndicator('Title Power!', 'corner');
         createFloatingEmoji('✨', event.clientX, event.clientY);
     }
 
@@ -3163,7 +3020,6 @@ Experimenta os códigos secretos para surpresas especiais!
         const message = currentLanguage === 'pt' ?
             '⚡ Tech Glitch! Sistema corrompido! ⚡' :
             '⚡ Tech Glitch! System corrupted! ⚡';
-        showNotification(message, 'warning');
         
         // Track analytics
         if (typeof trackEasterEgg === 'function') {
@@ -3173,28 +3029,29 @@ Experimenta os códigos secretos para surpresas especiais!
 
     createGlitchParticles(element) {
         const rect = element.getBoundingClientRect();
-        const particles = ['⚡', '💥', '🔥', '⚡', '💥'];
         
-        particles.forEach((particle, index) => {
+        // Create simple glitch effect without emojis
+        for (let i = 0; i < 3; i++) {
             setTimeout(() => {
                 const particleEl = document.createElement('div');
-                particleEl.textContent = particle;
                 particleEl.style.position = 'fixed';
                 particleEl.style.left = rect.left + Math.random() * rect.width + 'px';
                 particleEl.style.top = rect.top + Math.random() * rect.height + 'px';
-                particleEl.style.fontSize = '1.5rem';
+                particleEl.style.color = 'var(--primary-color)';
+                particleEl.style.fontSize = '12px';
+                particleEl.style.fontWeight = 'bold';
                 particleEl.style.pointerEvents = 'none';
                 particleEl.style.zIndex = '9999';
+                particleEl.style.opacity = '0.8';
                 particleEl.style.animation = 'fadeInScale 0.3s ease forwards';
                 
                 document.body.appendChild(particleEl);
                 
-                // Remove particle after animation
                 setTimeout(() => {
                     particleEl.remove();
                 }, 1000);
-            }, index * 100);
-        });
+            }, i * 100);
+        }
     }
 
     createFloatingElements(emojis, count) {
@@ -3257,6 +3114,7 @@ function initializeAll() {
     // Command Palette & Recruiter Mode wiring
     setupCommandPalette();
     setupRecruiterMode();
+    setupScrollTopButton();
     
     // Count projects delivered and update stat dynamically
     const projectsDelivered = document.querySelectorAll('.projects .project-card').length;
@@ -3335,26 +3193,27 @@ function initializeAll() {
     
     images.forEach(img => imageObserver.observe(img));
     
-    // Optimized scroll animations observer
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    // Optimized scroll animations observer - REMOVED (handled by CustomScrollAnimations)
+    // const observerOptions = {
+    //     threshold: 0.05, // Reduced threshold for better performance
+    //     rootMargin: '0px 0px -20px 0px' // Reduced margin
+    // };
 
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                requestAnimationFrame(() => {
-                    entry.target.classList.add('fade-in-up');
-                });
-            }
-        });
-    }, observerOptions);
+    // const scrollObserver = new IntersectionObserver((entries) => {
+    //     entries.forEach(entry => {
+    //         if (entry.isIntersecting) {
+    //             // Use requestAnimationFrame for better performance
+    //             requestAnimationFrame(() => {
+    //                 entry.target.classList.add('fade-in-up');
+    //             });
+    //         }
+    //     });
+    // }, observerOptions);
 
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        scrollObserver.observe(section);
-    });
+    // const sections = document.querySelectorAll('section');
+    // sections.forEach(section => {
+    //     scrollObserver.observe(section);
+    // });
 }
 
 // Initialize everything when DOM is ready
@@ -3490,12 +3349,6 @@ function setupRecruiterMode() {
         const next = !(document.body.classList.contains('recruiter'));
         apply(next);
         localStorage.setItem(key, next ? '1' : '0');
-        
-        // Show notification
-        const message = next ? 
-            '📄 Recruiter Mode ON: One-page summary activated' : 
-            '🎨 Recruiter Mode OFF: Full experience restored';
-        showNotification(message, 'info');
     });
 }
 
@@ -4615,3 +4468,34 @@ class TimelineAnimations {
 
 // Initialize timeline scroll controls and animations
 // Moved to initializeAll()
+
+// Scroll-To-Top Button logic
+function setupScrollTopButton() {
+    const btn = document.getElementById('scrollTopBtn');
+    if (!btn) return;
+
+    const onScroll = () => {
+        const y = window.scrollY || document.documentElement.scrollTop;
+        if (y > 600 && !document.body.classList.contains('recruiter')) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    };
+
+    // Show/hide on scroll
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+
+    // Smooth scroll to top
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Hide when recruiter mode toggles ON
+    const recruiterToggle = document.getElementById('recruiterToggle');
+    recruiterToggle?.addEventListener('click', () => {
+        setTimeout(onScroll, 0);
+    });
+}

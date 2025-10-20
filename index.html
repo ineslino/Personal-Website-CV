@@ -307,11 +307,17 @@
         </div>
     </div>
 
-    <!-- Recruiter Mode Floating Toggle -->
-    <button class="recruiter-toggle" id="recruiterToggle" type="button" aria-pressed="false" title="Recruiter Mode - One-page summary for quick scanning">
-        <span>📄</span>
-        <span>Recruiter Mode</span>
-    </button>
+    <!-- Fixed Actions: Recruiter Mode + Scroll To Top -->
+    <div class="fixed-actions" aria-label="Fixed actions">
+        <button class="recruiter-toggle" id="recruiterToggle" type="button" aria-pressed="false" title="Recruiter Mode - One-page summary for quick scanning">
+            <span>📄</span>
+            <span>Recruiter Mode</span>
+        </button>
+        <!-- Scroll To Top Button (only visible when recruiter mode is OFF) -->
+        <button id="scrollTopBtn" class="scroll-top-btn" type="button" aria-label="Scroll to top" title="Voltar ao topo">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
 
     <!-- About Section -->
     <section id="about" class="about">

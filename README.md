@@ -51,6 +51,15 @@ Um website interativo e criativo que combina tecnologia, música e culinária pa
 
 ## ✨ Melhorias Recentes (2025)
 
+### **Atualizações de Interação e UI (Out 2025)**
+- **Scroll Animations com Fade In/Out + Blur**: elementos começam desfocados e com opacidade 0 e ficam nítidos ao entrar em viewport; ao sair, voltam a desvanecer. Implementado via CSS transitions e `IntersectionObserver` (sem keyframes).
+- **Botão “Scroll to Top”**: botão flutuante para voltar ao topo, visível apenas fora do Recruiter Mode; aparece após ~600px de scroll. Posicionado num contentor fixo no canto inferior direito.
+- **Ação Fixa (Fixed Actions)**: `Recruiter Mode` e `Scroll to Top` foram agrupados numa wrapper fixa; layout em coluna com o botão “up” por cima do `Recruiter Mode` para evitar sobreposição.
+- **Tecnologias – Popups**: adicionados popups informativos também para `Docker` e `Kibana`, tal como nas restantes tecnologias principais.
+- **Efeito Glitch das Tecnologias**: comportamento é intencionalmente aleatório (probabilidade controlada); pode acontecer mais vezes no mesmo item (ex.: ArgoCD). 
+- **Botões Uniformes**: normalizado o tamanho dos botões (incluindo o “Descarregar CV”) com `box-sizing: border-box;` para que a borda não altere o tamanho total.
+- **Acessibilidade & UX**: durações de transição harmonizadas (0.6s) e blur mais perceptível no conteúdo das secções para um efeito mais elegante.
+
 ### **Seção de Competências Simplificada**
 - **Animação Suave**: Removidas animações complexas (typewriter, bounce effects)
 - **Fade-in Elegante**: Transições simples de opacidade e movimento vertical mínimo
@@ -64,10 +73,15 @@ Um website interativo e criativo que combina tecnologia, música e culinária pa
 - **Design Minimalista**: Visual limpo e profissional
 
 ### **Sistema de Animações Otimizado**
-- **Animações Naturais**: Transições CSS nativas com timing `ease`
+- **Animações Naturais**: Transições CSS nativas com timing `ease` e controle bidirecional (in/out)
 - **Hierarquia Visual**: Z-index organizado para sobreposições corretas
 - **Acessibilidade**: Menos movimento que pode causar desconforto
 - **Performance**: Redução de cálculos complexos e efeitos pesados
+
+### **Ações Fixas (Recruiter + Up)**
+- Wrapper fixa `.fixed-actions` no canto inferior direito
+- Botão `Scroll to Top` acima do `Recruiter Mode`
+- Oculto no Recruiter Mode para evitar distrações
 
 ## 🚀 Funcionalidades Interativas
 
@@ -93,6 +107,15 @@ Um website interativo e criativo que combina tecnologia, música e culinária pa
 - Modal com tecnologias, impacto e descrição
 - Demonstração de competências práticas
 
+### 6. **Scroll Suave com Fade & Blur**
+- Transições de opacidade e blur ao entrar/sair de viewport
+- Implementado com `IntersectionObserver` + classes CSS
+
+### 7. **Botão “Scroll to Top”**
+- Visível após ~600px de scroll
+- Suave até ao topo ao clicar
+- Oculto em Recruiter Mode
+
 ### 5. **Tema Dark/Light**
 - Toggle entre temas
 - Persistência no localStorage
@@ -117,6 +140,10 @@ Um website interativo e criativo que combina tecnologia, música e culinária pa
 - **Interatividade**: Convida à exploração
 - **Personalidade**: Mostra quem é a pessoa por trás do CV
 - **Memorabilidade**: Design único que se destaca
+
+## 🔄 Notas sobre efeitos aleatórios
+
+- **Glitch nas Tecnologias**: efeito propositadamente aleatório; pode ocorrer mais vezes numa tecnologia do que noutras. Se for necessário, pode ser ajustado para round‑robin/probabilidades uniformes.
 
 ## 📱 Responsividade
 

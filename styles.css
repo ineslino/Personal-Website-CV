@@ -20,8 +20,7 @@ body {
     overflow-x: hidden;
     /* Enhanced scroll performance */
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    scroll-snap-type: y proximity; /* Better scroll snapping */
+    scroll-snap-type: none; /* Disable snap to avoid sluggish section transitions */
 }
 
 /* Custom scrollbar styling - softer colors */
@@ -50,18 +49,17 @@ body {
     scrollbar-color: rgba(99, 102, 241, 0.6) var(--bg-secondary);
 }
 
-/* Performance optimizations */
-* {
-    scroll-behavior: smooth;
-}
 
 /* GPU acceleration for better performance */
 .passion-card,
 .tech-item,
 .project-card,
-.skill-category {
+.skill-category,
+section {
     will-change: transform;
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 /* Optimize animations */
@@ -930,10 +928,19 @@ body {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.hero-buttons .btn {
+    flex: 0 0 auto;
+    width: 220px;
+    height: 44px;
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
 }
 
 .btn {
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1rem;
     border: none;
     border-radius: 0.5rem;
     font-weight: 600;
@@ -943,13 +950,18 @@ body {
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    min-width: 0;
+    justify-content: center;
+    height: 44px;
+    box-sizing: border-box; /* ensure borders don't change overall size */
 }
 
 .btn-primary {
     background: var(--gradient-primary);
     color: white;
     box-shadow: var(--shadow-lg);
+    border: none;
 }
 
 .btn-primary:hover {
@@ -974,7 +986,7 @@ body {
     color: var(--text-primary);
     border: 2px solid var(--secondary-color);
     text-decoration: none;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
 }
@@ -1028,9 +1040,16 @@ body {
     border-radius: 0.75rem;
     transition: var(--transition-normal);
     cursor: pointer;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.4s ease, transform 0.4s ease, var(--transition-normal);
+    opacity: 0.9;
+    transform: translateY(5px);
+    filter: blur(0.3px);
+    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease, var(--transition-normal);
+}
+
+.tech-item.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
 }
 
 .tech-item:hover {
@@ -1117,11 +1136,27 @@ body {
     gap: 1.5rem;
 }
 
-/* Neutralize global intro transforms for About cards to avoid visual misalignment */
+/* Neutralize global intro transforms for About cards - Allow subtle animations */
 .about .stat-card,
 .about .languages-card,
 .about .philosophy-card,
-.about .hobbies-container { opacity: 1 !important; transform: none !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+.about .hobbies-container { 
+    opacity: 0.95;
+    transform: translateY(8px);
+    filter: blur(0.5px);
+    margin-top: 0;
+    margin-bottom: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+.about .stat-card.fade-in-up,
+.about .languages-card.fade-in-up,
+.about .philosophy-card.fade-in-up,
+.about .hobbies-container.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
 
 /* Force uniform outside spacing for grid items; gap controls the space */
 .about .stat-card,
@@ -1648,10 +1683,18 @@ body {
     width: 380px;
     min-width: 380px;
     flex-shrink: 0;
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 0.9;
+    transform: translateY(15px);
+    filter: blur(0.3px);
     animation: timelineCardFadeIn 0.6s ease forwards;
     animation-play-state: paused;
+}
+
+.timeline-item-horizontal.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    animation-play-state: running;
 }
 
 .timeline-item-horizontal:nth-child(1) {
@@ -1879,9 +1922,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0.9;
+    transform: translateY(8px);
+    filter: blur(0.3px);
+    transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+}
+
+.skill-item.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
 }
 
 .skill-item span {
@@ -2080,10 +2130,10 @@ body {
 
 /* Recruiter Mode */
 .recruiter-toggle { 
-    position: fixed; 
-    right: 16px; 
-    bottom: 16px; 
-    z-index: 4800; 
+    position: relative; 
+    right: auto; 
+    bottom: auto; 
+    z-index: 1; 
     background: var(--bg-card); 
     border: 1px solid rgba(255,255,255,0.2); 
     border-radius: 9999px; 
@@ -2097,6 +2147,56 @@ body {
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
+}
+
+/* Scroll-To-Top Button */
+.fixed-actions .scroll-top-btn {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 2px solid var(--primary-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity .3s ease, transform .3s ease, visibility .3s ease, background .2s ease, color .2s ease;
+    z-index: 1;
+}
+
+.fixed-actions .scroll-top-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(4px);
+}
+
+.fixed-actions .scroll-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Hide in recruiter mode */
+body.recruiter .scroll-top-btn { display: none; }
+
+/* Fixed actions container (bottom-right) */
+.fixed-actions {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 4800;
+    display: flex;
+    flex-direction: column-reverse; /* recruiter em baixo, up em cima */
+    align-items: flex-end;
+    gap: 10px;
 }
 .recruiter-toggle:hover { 
     transform: scale(1.05); 
@@ -2261,23 +2361,27 @@ body.recruiter .recruiter-summary {
 }
 
 .cv-download-btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     padding: 0.75rem 1.5rem;
-    border-radius: 25px;
+    border-radius: 0.5rem;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-lg);
     border: none;
     cursor: pointer;
+    width: auto;
+    min-width: fit-content;
 }
 
 .cv-download-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
     background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
 }
 
@@ -2576,12 +2680,19 @@ body.recruiter .recruiter-summary {
     z-index: 2;
 }
 
-/* Override global animation state for project cards */
+/* Override global animation state for project cards - Allow animations */
 .project-card {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-    transition: box-shadow 0.3s ease !important;
+    /* Remove !important overrides to allow animations */
+    opacity: 0.95;
+    transform: translateY(8px);
+    filter: blur(0.5px);
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease, box-shadow 0.3s ease;
+}
+
+.project-card.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
 }
 
 .project-header {
@@ -3636,53 +3747,49 @@ body.recruiter .recruiter-summary {
     }
 }
 
-/* Initial state for scroll animations - remove blur from skill categories */
+/* Ensure content is visible immediately; animations are additive, not blocking */
 section:not(.hero),
 .project-card,
 .cert-card,
 .pub-card,
 .stat-card {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-    filter: blur(2px);
-    transition: none;
+    /* Remove these overrides to allow animations */
+    /* opacity: 1;
+    transform: none;
+    filter: none; */
 }
 
-/* Skill categories with simple fade effect */
+/* Skill categories visible by default - Allow animations */
 .skill-category {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    /* Remove overrides to allow animations */
+    /* opacity: 1;
+    transform: none; */
 }
 
-/* Passion cards without blur effect */
+/* Passion cards visible by default - Allow animations */
 .passion-card {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: none;
+    /* Remove overrides to allow animations */
+    /* opacity: 1;
+    transform: none; */
 }
 
-/* Ensure hero section is always visible */
+/* Ensure hero section is always visible - Allow subtle animations */
 .hero {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    /* Remove !important to allow animations if needed */
 }
 /* Enhanced Custom Scroll Animations - cleaner and smoother */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
-        transform: translateY(40px) scale(0.95);
+        transform: translate3d(0, 30px, 0) scale(0.95);
         filter: blur(2px);
-    }
-    50% {
-        opacity: 0.8;
-        transform: translateY(20px) scale(0.98);
-        filter: blur(1px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         filter: blur(0);
     }
 }
@@ -3995,10 +4102,44 @@ section:not(.hero),
     }
 }
 
-/* Initial state for animated elements */
-section, .cert-card, .pub-card, .passion-card, .stat-card:not(.about .stat-card) {
+/* Initial state for animated elements - invisible with blur */
+section:not(.hero) {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 30px, 0) scale(0.98);
+    filter: blur(2px);
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+/* Stronger blur specifically on section content to emphasize text fade */
+section:not(.hero) .container {
+    filter: blur(3px);
+    opacity: 0;
+    transition: opacity 0.6s ease, filter 0.6s ease;
+}
+
+/* Initial state for other animated elements */
+.cert-card, .pub-card, .passion-card, .stat-card:not(.about .stat-card), .project-card, .skill-category {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.985);
+    filter: blur(1.5px);
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+/* When animated, make fully visible and sharp - Include all sections */
+section.fade-in-up, 
+.cert-card.fade-in-up, 
+.pub-card.fade-in-up, 
+.passion-card.fade-in-up, 
+.stat-card:not(.about .stat-card).fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* Final state for blurred section content */
+section.fade-in-up .container {
+    filter: blur(0);
+    opacity: 1;
 }
 
 @keyframes pulse {
@@ -4084,8 +4225,11 @@ section, .cert-card, .pub-card, .passion-card, .stat-card:not(.about .stat-card)
     }
 }
 
+/* General fade-in-up final state (use transitions, no keyframes) */
 .fade-in-up {
-    animation: fadeInUp 0.6s ease forwards;
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
 }
 
 .error {
