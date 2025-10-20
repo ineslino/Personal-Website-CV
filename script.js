@@ -1222,39 +1222,60 @@ window.addEventListener('click', (e) => {
 });
 
 // Contact Form Handling
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    
-    const loadingText = currentLanguage === 'pt' ? 
-        '<i class="fas fa-spinner fa-spin"></i> A Enviar...' :
-        '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    
-    const successText = currentLanguage === 'pt' ?
-        '<i class="fas fa-check"></i> Mensagem Enviada!' :
-        '<i class="fas fa-check"></i> Message Sent!';
-    
-    submitBtn.innerHTML = loadingText;
-    submitBtn.disabled = true;
-    
-    setTimeout(() => {
-        submitBtn.innerHTML = successText;
-        submitBtn.style.background = 'var(--success-color)';
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = '';
-            contactForm.reset();
-        }, 2000);
-    }, 1500);
-    
-});
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData);
+        
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        const loadingText = currentLanguage === 'pt' ? 
+            '<i class="fas fa-spinner fa-spin"></i> A Enviar...' :
+            '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        const successText = currentLanguage === 'pt' ?
+            '<i class="fas fa-check"></i> Mensagem Enviada!' :
+            '<i class="fas fa-check"></i> Message Sent!';
+        const errorText = currentLanguage === 'pt' ?
+            '<i class="fas fa-triangle-exclamation"></i> Erro ao Enviar' :
+            '<i class="fas fa-triangle-exclamation"></i> Error Sending';
+
+        submitBtn.innerHTML = loadingText;
+        submitBtn.disabled = true;
+        
+        try {
+            // Replace with your preferred service endpoint
+            // Example using Formspree (create a form and replace YOUR_FORM_ID)
+            const endpoint = 'https://formspree.io/f/xpwyezrl';
+            const resp = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            if (resp.ok) {
+                submitBtn.innerHTML = successText;
+                submitBtn.style.background = 'var(--success-color)';
+                contactForm.reset();
+            } else {
+                submitBtn.innerHTML = errorText;
+                submitBtn.style.background = 'var(--error-color)';
+            }
+        } catch (err) {
+            submitBtn.innerHTML = errorText;
+            submitBtn.style.background = 'var(--error-color)';
+        } finally {
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.style.background = '';
+            }, 2000);
+        }
+    });
+}
 
 // Enhanced Passion Cards with Modal System
 class PassionCards {
@@ -3997,6 +4018,12 @@ function populateRecruiterSummary() {
                 text: 'LinkedIn',
                 url: 'https://www.linkedin.com/in/ines-fv-lino/',
                 color: '#0077b5'
+            },
+            {
+                icon: 'fas fa-envelope',
+                text: 'cv@ineslino.me',
+                url: 'mailto:cv@ineslino.me',
+                color: '#6366f1'
             },
             {
                 icon: 'fab fa-github',
