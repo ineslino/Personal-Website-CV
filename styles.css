@@ -144,6 +144,15 @@ body {
     color: var(--text-primary) !important;
 }
 
+/* Light Theme Logo Overrides - ajustar brilho para modo claro */
+[data-theme="light"] .logo {
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3)) brightness(1.0) contrast(1.0);
+}
+
+[data-theme="light"] .logo:hover {
+    filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5)) brightness(1.1) contrast(1.05);
+}
+
 [data-theme="light"] .nav-logo {
     color: var(--text-primary) !important;
 }
@@ -579,12 +588,18 @@ body {
 
 .logo {
     transition: var(--transition-normal);
-    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+    filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.6)) 
+            drop-shadow(0 0 5px rgba(255, 255, 255, 0.3))
+            brightness(1.8) contrast(1.5);
+    border-radius: 8px;
+    object-fit: contain;
 }
 
 .logo:hover {
     transform: scale(1.1) rotate(5deg);
-    filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5));
+    filter: drop-shadow(0 0 25px rgba(99, 102, 241, 0.8)) 
+            drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))
+            brightness(2.0) contrast(1.7);
 }
 
 .nav-menu {
@@ -3611,6 +3626,11 @@ body.recruiter .recruiter-summary {
         gap: 0.5rem;
     }
     
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    
     .hint-btn {
         padding: 0.4rem;
         font-size: 0.8rem;
@@ -3744,6 +3764,11 @@ body.recruiter .recruiter-summary {
     
     .deployment-sequence {
         grid-template-columns: 1fr;
+    }
+    
+    .logo {
+        width: 35px;
+        height: 35px;
     }
 }
 
