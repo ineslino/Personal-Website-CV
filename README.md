@@ -143,7 +143,7 @@ Um website interativo e criativo que combina tecnologia, música e culinária pa
 
 ## 🔄 Notas sobre efeitos aleatórios
 
-- **Glitch nas Tecnologias**: efeito propositadamente aleatório; pode ocorrer mais vezes numa tecnologia do que noutras. Se for necessário, pode ser ajustado para round‑robin/probabilidades uniformes.
+- **Glitch nas Tecnologias**: efeito propositadamente aleatório; pode ocorrer mais vezes numa tecnologia do que noutras.
 
 ## 📱 Responsividade
 
